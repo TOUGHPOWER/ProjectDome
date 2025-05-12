@@ -29,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
     {
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         float verticalInput = Input.GetAxisRaw("Vertical");
-        float speed = baseSpeed * speedMultiplier;
+        baseSpeed = baseSpeed * speedMultiplier;
         Vector2 moveDirection = new Vector2((horizontalInput * baseSpeed) * Time.deltaTime, (verticalInput * baseSpeed) * Time.deltaTime);
 
         playerRb.velocity = moveDirection;

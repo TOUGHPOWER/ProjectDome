@@ -25,11 +25,11 @@ public class Currency : MonoBehaviour
     {
         if (currencyType == Currencies.Energy) 
         {
-            playerInfo.currentNumEnergy += amount;
+            playerInfo.CurrentNumEnergy += amount;
         }
         else if (currencyType == Currencies.Crystal)
         {
-            playerInfo.currentNumCrystals += amount;
+            playerInfo.CurrentNumCrystals += amount;
         }
     }
 

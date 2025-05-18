@@ -37,7 +37,9 @@ public class PlayerInfo : Entity
             targetBuilding.currentAmountDeposited += 1;
             yield return new WaitForSeconds(despositRate);
         }
-        
+
+        isDepositing = false;
+
 
     }
     

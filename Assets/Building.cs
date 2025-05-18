@@ -7,6 +7,7 @@ public class Building : Entity
 {
     public PlayerInfo playerInfo;
 
+    private float lastCurrentHealth;
     [field: SerializeField] public float StartingMaxHealth { get; private set; }
     [SerializeField] public float currentHPPercentage;
 
@@ -21,13 +22,20 @@ public class Building : Entity
     void Start()
     {
         SetupHealthValues(StartingMaxHealth);
+
+        print(CurrentHealth);
+        print(MaxHealth);
         
     }
 
     // Update is called once per frame
     void Update()
     {
-        UpdateRepairCost();
+        if(CurrentHealth != lastCurrentHealth)
+        {
+            lastCurrentHealth = CurrentHealth;
+            UpdateRepairCost();
+        }
 
         if (isInBuilding)
         {
@@ -44,28 +52,37 @@ public class Building : Entity
     private void UpdateRepairCost()
     {
         currentHPPercentage = CurrentHealth / MaxHealth;
-        float RepairCostMultiplier = float.Parse("1." + currentHPPercentage);
-        RepairCost = (int) Mathf.Round((RepairCost * RepairCostMultiplier) / 100);
+        print(currentHPPercentage);
+        float RepairCostMultiplier = 1f + currentHPPercentage;
+        print(RepairCostMultiplier);
+        RepairCost = Mathf.Round(RepairCost * RepairCostMultiplier);
+        print(RepairCost);
+        
     }
 
     public void TryBuying() 
     {
-        StartCoroutine(playerInfo.Depositing(this));
-        if (isBuilt)
+        if (!playerInfo.isDepositing) 
         {
-            
-            if (currentAmountDeposited >= RepairCost)
+            StartCoroutine(playerInfo.Depositing(this));
+            if (isBuilt)
             {
-                
-            }
-        }
-        else if(!isBuilt)
-        {
-            if (currentAmountDeposited >= BuildCost)
-            {
+                if (currentAmountDeposited >= RepairCost)
+                {
 
+                }
+            }
+            else if (!isBuilt)
+            {
+                if (currentAmountDeposited >= BuildCost)
+                {
+
+                }
             }
         }
+
+        
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

@@ -47,10 +47,12 @@ public abstract class Entity: MonoBehaviour
         MaxHealth += amountToIncrease;
     }
 
-    public virtual void SetupHealthValues(float maxHealth)
+    public virtual void SetupHealthValues(float buildingMaxHealth)
     {
-        MaxHealth = maxHealth;
+        MaxHealth = buildingMaxHealth;
+        print(MaxHealth);
         CurrentHealth = MaxHealth;
+        print(CurrentHealth);
     }
 
 }

@@ -33,7 +33,7 @@ public class PlayerInfo : Entity
         isDepositing = true;
         while (Input.GetButton("Jump"))
         {
-            CurrentNumCrystals -= 1;
+            CurrentNumEnergy -= 1;
             targetBuilding.currentAmountDeposited += 1;
             yield return new WaitForSeconds(despositRate);
         }

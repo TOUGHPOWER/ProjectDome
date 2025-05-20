@@ -5,34 +5,32 @@ using UnityEngine;
 
 public class Building : Entity
 {
+
     public PlayerInfo playerInfo;
 
     private float lastCurrentHealth;
-    [field: SerializeField] public float StartingMaxHealth { get; private set; }
-    [SerializeField] public float currentHPPercentage;
+    [field: SerializeField] public float BuildingMaxHP { get; private set; }
+    [SerializeField] float currentHPPercentage;
 
     [field: SerializeField] public float BuildCost {get; private set;}
+    [field: SerializeField] public float BaseRepairCost { get; private set; }
     [field: SerializeField] public float RepairCost { get; private set; }
     [field: SerializeField] public float currentAmountDeposited { get; set; }
-
-    [SerializeField] bool isBuilt;
-    [SerializeField] bool isInBuilding;
+    [field: SerializeField] public bool isBuilt { get; set; }
+    [field: SerializeField] public bool isInBuilding { get; set; }
 
     // Start is called before the first frame update
     void Start()
     {
-        SetupHealthValues(StartingMaxHealth);
 
-        print(CurrentHealth);
-        print(MaxHealth);
-        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(CurrentHealth != lastCurrentHealth)
+        if(isBuilt && CurrentHealth != lastCurrentHealth)
         {
+            
             lastCurrentHealth = CurrentHealth;
             UpdateRepairCost();
         }
@@ -51,13 +49,24 @@ public class Building : Entity
 
     private void UpdateRepairCost()
     {
-        currentHPPercentage = CurrentHealth / MaxHealth;
-        print(currentHPPercentage);
-        float RepairCostMultiplier = 1f + currentHPPercentage;
-        print(RepairCostMultiplier);
-        RepairCost = Mathf.Round(RepairCost * RepairCostMultiplier);
-        print(RepairCost);
+        currentHPPercentage = (CurrentHealth / MaxHealth) * 100;
+        print($"Current HP %:{ currentHPPercentage}");
+
+        float RepairCostMultiplier = 0;
+       
+        if (currentHPPercentage < 1)
+        {
+            RepairCostMultiplier = 2;
+        }
+        else if (currentHPPercentage < 100)
+        {
+            RepairCostMultiplier = float.Parse($"1.{100 - currentHPPercentage}");
+        }
         
+        print($"Current R.C.M:{RepairCostMultiplier}");
+        RepairCost = Mathf.Round(BaseRepairCost * RepairCostMultiplier);
+        print($"Current Repair Cost:{RepairCost}");
+
     }
 
     public void TryBuying() 
@@ -69,28 +78,23 @@ public class Building : Entity
             {
                 if (currentAmountDeposited >= RepairCost)
                 {
-
+                    IncreaseCurrentHP(BuildingMaxHP);
+                    //Change Sprite
                 }
             }
             else if (!isBuilt)
             {
                 if (currentAmountDeposited >= BuildCost)
                 {
-
+                    isBuilt = true;
+                    SetupHealthValues(BuildingMaxHP);
+                    currentAmountDeposited = 0;
                 }
             }
         }
 
-        
-        
-    }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            isInBuilding = true;
-        }
+
     }
 
 

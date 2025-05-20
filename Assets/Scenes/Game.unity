@@ -155,14 +155,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <CurrentHealth>k__BackingField: 0
-  playerInfo: {fileID: 0}
-  <StartingMaxHealth>k__BackingField: 100
+  playerInfo: {fileID: 1534075521}
+  <BuildingMaxHP>k__BackingField: 100
   currentHPPercentage: 0
   <BuildCost>k__BackingField: 50
-  <RepairCost>k__BackingField: 15
+  <BaseRepairCost>k__BackingField: 15
+  <RepairCost>k__BackingField: 0
   <currentAmountDeposited>k__BackingField: 0
-  isBuilt: 0
-  isInBuilding: 0
+  <isBuilt>k__BackingField: 0
+  <isInBuilding>k__BackingField: 0
 --- !u!50 &218589651
 Rigidbody2D:
   serializedVersion: 4
@@ -505,8 +506,9 @@ GameObject:
   - component: {fileID: 1024329637}
   - component: {fileID: 1024329636}
   - component: {fileID: 1024329635}
+  - component: {fileID: 1024329638}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: BuildingCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -595,6 +597,19 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 2
   m_TargetDisplay: 0
+--- !u!114 &1024329638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1024329633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33e7b3ae3a3559642b35db2ca49ce340, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildingCostText: {fileID: 0}
 --- !u!20 &1232593562 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 1236302708398188623, guid: b789b45e4a06a1f449fa135cc9ae9923, type: 3}
@@ -752,6 +767,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1534075521 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3095755572468658722, guid: b789b45e4a06a1f449fa135cc9ae9923, type: 3}
+  m_PrefabInstance: {fileID: 6094551656953287239}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 161d04cfdccb01c42a7685363552d3ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1556846544
 GameObject:
   m_ObjectHideFlags: 0
@@ -764,7 +790,7 @@ GameObject:
   - component: {fileID: 1556846547}
   - component: {fileID: 1556846546}
   m_Layer: 5
-  m_Name: Amount Text
+  m_Name: Repair Cost Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -930,6 +956,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2064789955}
   - component: {fileID: 2064789956}
+  - component: {fileID: 2064789957}
   m_Layer: 0
   m_Name: Deposit Area
   m_TagString: Untagged
@@ -997,6 +1024,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.4, y: 1.5}
   m_EdgeRadius: 0
+--- !u!114 &2064789957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2064789954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9aecf02a4c3336b4e855a3f68ceaa617, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2140077615
 GameObject:
   m_ObjectHideFlags: 0
@@ -1279,6 +1318,14 @@ PrefabInstance:
     - target: {fileID: 3095755572468658722, guid: b789b45e4a06a1f449fa135cc9ae9923, type: 3}
       propertyPath: <maxNumCrystals>k__BackingField
       value: 99999
+      objectReference: {fileID: 0}
+    - target: {fileID: 3095755572468658722, guid: b789b45e4a06a1f449fa135cc9ae9923, type: 3}
+      propertyPath: <CurrentNumEnergy>k__BackingField
+      value: 99999
+      objectReference: {fileID: 0}
+    - target: {fileID: 3095755572468658722, guid: b789b45e4a06a1f449fa135cc9ae9923, type: 3}
+      propertyPath: <CurrentNumCrystals>k__BackingField
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3986665444624794352, guid: b789b45e4a06a1f449fa135cc9ae9923, type: 3}
       propertyPath: m_LookaheadTime

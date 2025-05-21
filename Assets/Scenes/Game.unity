@@ -155,10 +155,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <CurrentHealth>k__BackingField: 0
+  <MaxHealth>k__BackingField: 0
   playerInfo: {fileID: 1534075521}
   <BuildingMaxHP>k__BackingField: 100
   currentHPPercentage: 0
-  <BuildCost>k__BackingField: 50
+  <BuildCost>k__BackingField: 10
   <BaseRepairCost>k__BackingField: 15
   <RepairCost>k__BackingField: 0
   <currentAmountDeposited>k__BackingField: 0
@@ -1303,53 +1304,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 2182121665743001553, guid: b789b45e4a06a1f449fa135cc9ae9923, type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
     - target: {fileID: 3095755572468658722, guid: b789b45e4a06a1f449fa135cc9ae9923, type: 3}
-      propertyPath: <maxHealth>k__BackingField
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 3095755572468658722, guid: b789b45e4a06a1f449fa135cc9ae9923, type: 3}
-      propertyPath: <maxNumEnergy>k__BackingField
-      value: 99999
-      objectReference: {fileID: 0}
-    - target: {fileID: 3095755572468658722, guid: b789b45e4a06a1f449fa135cc9ae9923, type: 3}
-      propertyPath: <maxNumCrystals>k__BackingField
-      value: 99999
-      objectReference: {fileID: 0}
-    - target: {fileID: 3095755572468658722, guid: b789b45e4a06a1f449fa135cc9ae9923, type: 3}
-      propertyPath: <CurrentNumEnergy>k__BackingField
-      value: 99999
-      objectReference: {fileID: 0}
-    - target: {fileID: 3095755572468658722, guid: b789b45e4a06a1f449fa135cc9ae9923, type: 3}
-      propertyPath: <CurrentNumCrystals>k__BackingField
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3986665444624794352, guid: b789b45e4a06a1f449fa135cc9ae9923, type: 3}
-      propertyPath: m_LookaheadTime
-      value: 0.248
-      objectReference: {fileID: 0}
-    - target: {fileID: 3986665444624794352, guid: b789b45e4a06a1f449fa135cc9ae9923, type: 3}
-      propertyPath: m_LookaheadSmoothing
-      value: 13.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7979401660904018474, guid: b789b45e4a06a1f449fa135cc9ae9923, type: 3}
-      propertyPath: m_BodyType
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7979401660904018474, guid: b789b45e4a06a1f449fa135cc9ae9923, type: 3}
-      propertyPath: m_GravityScale
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8796929390599232010, guid: b789b45e4a06a1f449fa135cc9ae9923, type: 3}
-      propertyPath: m_Size.y
-      value: 0.87718856
-      objectReference: {fileID: 0}
-    - target: {fileID: 8796929390599232010, guid: b789b45e4a06a1f449fa135cc9ae9923, type: 3}
-      propertyPath: m_Offset.y
-      value: -0.06577182
+      propertyPath: <BaseMaxHealth>k__BackingField
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

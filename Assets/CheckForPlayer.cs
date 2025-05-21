@@ -24,6 +24,7 @@ public class CheckForPlayer : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             parentBuilding.isInBuilding = false;
+            parentBuilding.playerInfo.EnableDepositing(true);
         }
     }
 }

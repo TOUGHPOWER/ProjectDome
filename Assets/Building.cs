@@ -71,6 +71,7 @@ public class Building : Entity
 
     public void TryBuying() 
     {
+
         if (!playerInfo.isDepositing) 
         {
             StartCoroutine(playerInfo.Depositing(this));
@@ -78,21 +79,23 @@ public class Building : Entity
             {
                 if (currentAmountDeposited >= RepairCost)
                 {
-                    IncreaseCurrentHP(BuildingMaxHP);
+                    playerInfo.EnableDepositing(false);
+                    Heal();
                     //Change Sprite
+                    currentAmountDeposited = 0;
                 }
             }
             else if (!isBuilt)
             {
                 if (currentAmountDeposited >= BuildCost)
                 {
+                    playerInfo.EnableDepositing(false);
                     isBuilt = true;
                     SetupHealthValues(BuildingMaxHP);
                     currentAmountDeposited = 0;
                 }
             }
         }
-
 
 
     }

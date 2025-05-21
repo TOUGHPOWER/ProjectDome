@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class Entity: MonoBehaviour
 {
     [field: SerializeField] public float CurrentHealth { get; set; }
-    public float MaxHealth { get; set; }
+    [field: SerializeField] public float MaxHealth { get; set; }
 
     public List<ScriptableObject> Perks { get; set; }
     public virtual void ReduceCurrentHP(float amountToReduce)
@@ -53,6 +53,11 @@ public abstract class Entity: MonoBehaviour
         print(MaxHealth);
         CurrentHealth = MaxHealth;
         print(CurrentHealth);
+    }
+
+    public void Heal()
+    {
+        CurrentHealth = MaxHealth;
     }
 
 }

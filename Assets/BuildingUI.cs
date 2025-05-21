@@ -28,6 +28,7 @@ public class BuildingUI : MonoBehaviour
     {
         if (parentBuilding.isBuilt)
         {
+
             float CurrentRepairCost = parentBuilding.RepairCost - parentBuilding.currentAmountDeposited;
             buildingCostText.text = CurrentRepairCost.ToString();
         }
@@ -35,6 +36,15 @@ public class BuildingUI : MonoBehaviour
         {
             float CurrentBuildCost = parentBuilding.BuildCost - parentBuilding.currentAmountDeposited;
             buildingCostText.text = CurrentBuildCost.ToString();
+        }
+
+        if (buildingCostText.text == "0")
+        {
+            buildingCostText.text = "";
+        }
+        else if(int.Parse(buildingCostText.text) < 0)
+        {
+            buildingCostText.text = "";
         }
 
     }

@@ -11,9 +11,9 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Player
+  - Enemies
+  - Buildings
   - 
   - 
   - 
@@ -40,4 +40,16 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Buildings
+    uniqueID: 1187792961
+    locked: 0
+  - name: Player
+    uniqueID: 1980996689
+    locked: 0
+  - name: Shield
+    uniqueID: 491564679
+    locked: 0
+  - name: Enemies
+    uniqueID: 2911906325
     locked: 0

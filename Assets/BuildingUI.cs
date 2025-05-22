@@ -26,16 +26,30 @@ public class BuildingUI : MonoBehaviour
 
     private void UpdateCostText()
     {
-        if (parentBuilding.isBuilt)
-        {
+        float currentRepairCost = parentBuilding.RepairCost - parentBuilding.CurrentAmountDeposited;
+        float currentBuildCost = parentBuilding.BuildCost - parentBuilding.CurrentAmountDeposited;
+        
 
-            float CurrentRepairCost = parentBuilding.RepairCost - parentBuilding.currentAmountDeposited;
-            buildingCostText.text = CurrentRepairCost.ToString();
-        }
-        else if (!parentBuilding.isBuilt)
+        if (parentBuilding.BuildingType == BuildingTypes.ShieldGenerator)
         {
-            float CurrentBuildCost = parentBuilding.BuildCost - parentBuilding.currentAmountDeposited;
-            buildingCostText.text = CurrentBuildCost.ToString();
+            float currentUpgCost = parentBuilding.GetComponent<ShieldGenerator>().upgradeCost - parentBuilding.CurrentAmountDeposited;
+            if (parentBuilding.currentHPPercentage < 100)
+            {
+                buildingCostText.text = currentRepairCost.ToString();
+            }
+            else
+            {
+                buildingCostText.text = currentUpgCost.ToString();
+            }
+
+        }
+        else if (parentBuilding.IsBuilt)
+        {
+            buildingCostText.text = currentRepairCost.ToString();
+        }
+        else if (!parentBuilding.IsBuilt)
+        {
+            buildingCostText.text = currentBuildCost.ToString();
         }
 
         if (buildingCostText.text == "0")

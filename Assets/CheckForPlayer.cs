@@ -15,7 +15,7 @@ public class CheckForPlayer : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            parentBuilding.isInBuilding = true;
+            parentBuilding.PlayerInBuilding = true;
         }
     }
 
@@ -23,7 +23,7 @@ public class CheckForPlayer : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            parentBuilding.isInBuilding = false;
+            parentBuilding.PlayerInBuilding = false;
             parentBuilding.playerInfo.EnableDepositing(true);
         }
     }

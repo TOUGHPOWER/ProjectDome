@@ -7,8 +7,10 @@ public abstract class Entity: MonoBehaviour
     [field: SerializeField] public float CurrentHealth { get; set; }
     [field: SerializeField] public float MaxHealth { get; set; }
 
-    public List<ScriptableObject> Perks { get; set; }
-    public virtual void ReduceCurrentHP(float amountToReduce)
+    [field: SerializeField] public List<ScriptableObject> CurrentPerks { get; set; }
+
+    [field: SerializeField] public  int MaxPerkAmount { get; private set; }
+    public virtual void SubtractCurrentHP(float amountToReduce)
     {
         if((CurrentHealth - amountToReduce) <= 0) 
         {
@@ -20,7 +22,7 @@ public abstract class Entity: MonoBehaviour
         }
         
     }
-    public virtual void IncreaseCurrentHP(float amountToIncrease)
+    public virtual void AddCurrentHP(float amountToIncrease)
     {
         if ((CurrentHealth + amountToIncrease) >= 100)
         {
@@ -31,7 +33,7 @@ public abstract class Entity: MonoBehaviour
             CurrentHealth += amountToIncrease;
         }
     }
-    public virtual void ReduceMaxHP(float amountToReduce)
+    public virtual void SubtractMaxHP(float amountToReduce)
     {
         if ((MaxHealth - amountToReduce) <= 0)
         {
@@ -42,9 +44,10 @@ public abstract class Entity: MonoBehaviour
             MaxHealth -= amountToReduce;
         }
     }
-    public virtual void IncreaseMaxHP(float amountToIncrease)
+    public virtual void AddMaxHP(float amountToIncrease)
     {
         MaxHealth += amountToIncrease;
+        Heal();
     }
 
     public virtual void SetupHealthValues(float buildingMaxHealth)

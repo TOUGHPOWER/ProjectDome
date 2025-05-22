@@ -5,37 +5,48 @@ using UnityEngine;
 
 public class Building : Entity
 {
+    [Header("Class Variables")]
 
     public PlayerInfo playerInfo;
 
     private float lastCurrentHealth;
     [field: SerializeField] public float BuildingMaxHP { get; private set; }
-    [SerializeField] float currentHPPercentage;
+    [field: SerializeField] public float currentHPPercentage { get; private set; }
 
+    private bool nothing;
     [field: SerializeField] public float BuildCost {get; private set;}
     [field: SerializeField] public float BaseRepairCost { get; private set; }
     [field: SerializeField] public float RepairCost { get; private set; }
-    [field: SerializeField] public float currentAmountDeposited { get; set; }
-    [field: SerializeField] public bool isBuilt { get; set; }
-    [field: SerializeField] public bool isInBuilding { get; set; }
+    [field: SerializeField] public float CurrentAmountDeposited { get; set; }
+    
+    [field: SerializeField] public bool IsBuilt { get; set; }
+    [field: SerializeField] public bool PlayerInBuilding { get; set; }
+
+    [Header("Others")]
+    [SerializeField] public BuildingTypes BuildingType;
+    [field: SerializeField] public Sprite BuildingSprite { get; set; }
 
     // Start is called before the first frame update
     void Start()
     {
-
+        if (BuildingType == BuildingTypes.ShieldGenerator)
+        {
+            Build();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(isBuilt && CurrentHealth != lastCurrentHealth)
+        // Makes
+        if(IsBuilt && CurrentHealth != lastCurrentHealth)
         {
             
             lastCurrentHealth = CurrentHealth;
             UpdateRepairCost();
         }
 
-        if (isInBuilding)
+        if (PlayerInBuilding)
         {
             if (Input.GetButton("Jump"))
             {
@@ -64,40 +75,68 @@ public class Building : Entity
         }
         
         print($"Current R.C.M:{RepairCostMultiplier}");
+
         RepairCost = Mathf.Round(BaseRepairCost * RepairCostMultiplier);
+
         print($"Current Repair Cost:{RepairCost}");
 
     }
 
-    public void TryBuying() 
+    private void TryBuying() 
     {
 
         if (!playerInfo.isDepositing) 
         {
             StartCoroutine(playerInfo.Depositing(this));
-            if (isBuilt)
+
+            if (IsBuilt)
             {
-                if (currentAmountDeposited >= RepairCost)
+                if(BuildingType == BuildingTypes.ShieldGenerator)
                 {
+                    ShieldGenerator sg = gameObject.GetComponent<ShieldGenerator>();
+                    if (currentHPPercentage < 100)
+                    {
+                        if (CurrentAmountDeposited >= RepairCost)//Repairs Building if it is already built
+                        {
+                            playerInfo.EnableDepositing(false);
+                            Heal();
+                            //Change Sprite
+                            CurrentAmountDeposited = 0;
+                        }
+                    }
+                    else if(CurrentAmountDeposited>= sg.upgradeCost)
+                    {
+                        sg.Upgrade();
+                        CurrentAmountDeposited = 0;
+                        playerInfo.EnableDepositing(false);
+                    }
+                    
+                }
+                else if (CurrentAmountDeposited >= RepairCost)
+                {
+                    //Repairs Building if it is already built
                     playerInfo.EnableDepositing(false);
                     Heal();
                     //Change Sprite
-                    currentAmountDeposited = 0;
+                    CurrentAmountDeposited = 0;
                 }
             }
-            else if (!isBuilt)
+            else if (!IsBuilt) //Builds Building instead
             {
-                if (currentAmountDeposited >= BuildCost)
+                if (CurrentAmountDeposited >= BuildCost)
                 {
                     playerInfo.EnableDepositing(false);
-                    isBuilt = true;
-                    SetupHealthValues(BuildingMaxHP);
-                    currentAmountDeposited = 0;
+                    Build();
+                    CurrentAmountDeposited = 0;
                 }
             }
         }
+    }
 
-
+    private void Build()
+    {
+        IsBuilt = true;
+        SetupHealthValues(BuildingMaxHP);
     }
 
 

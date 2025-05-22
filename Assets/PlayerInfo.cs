@@ -40,7 +40,7 @@ public class PlayerInfo : Entity
             while ((Input.GetButton("Jump") && isDepositing) && canDeposit)
             {
                 CurrentNumEnergy -= 1;
-                targetBuilding.currentAmountDeposited += 1;
+                targetBuilding.CurrentAmountDeposited += 1;
                 yield return new WaitForSeconds(despositRate);
             }
 

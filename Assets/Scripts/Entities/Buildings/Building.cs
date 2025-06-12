@@ -10,21 +10,23 @@ public class Building : Entity
     public PlayerInfo playerInfo;
 
     private float lastCurrentHealth;
-    [field: SerializeField] public float BuildingMaxHP { get; private set; }
-    [field: SerializeField] public float currentHPPercentage { get; private set; }
+    [field: SerializeField] public float BuildingMaxHP { get; private set;}
+    [field: SerializeField] public float currentHPPercentage { get; private set;}
 
-    private bool nothing;
     [field: SerializeField] public float BuildCost {get; private set;}
-    [field: SerializeField] public float BaseRepairCost { get; private set; }
-    [field: SerializeField] public float RepairCost { get; private set; }
-    [field: SerializeField] public float CurrentAmountDeposited { get; set; }
+    [field: SerializeField] public float BaseRepairCost { get; private set;}
+    [field: SerializeField] public float RepairCost { get; private set;}
+    [field: SerializeField] public float CurrentAmountDeposited { get; set;}
     
     [field: SerializeField] public bool IsBuilt { get; set; }
     [field: SerializeField] public bool PlayerInBuilding { get; set; }
 
+    
+
     [Header("Others")]
     [SerializeField] public BuildingTypes BuildingType;
-    [field: SerializeField] public Sprite BuildingSprite { get; set; }
+    [SerializeField] private Sprite builtSprite;
+    [SerializeField] private Sprite destroyedSprite;
 
     // Start is called before the first frame update
     void Start()
@@ -41,7 +43,6 @@ public class Building : Entity
         // Makes
         if(IsBuilt && CurrentHealth != lastCurrentHealth)
         {
-            
             lastCurrentHealth = CurrentHealth;
             UpdateRepairCost();
         }
@@ -96,7 +97,7 @@ public class Building : Entity
                     ShieldGenerator sg = gameObject.GetComponent<ShieldGenerator>();
                     if (currentHPPercentage < 100)
                     {
-                        if (CurrentAmountDeposited >= RepairCost)//Repairs Building if it is already built
+                        if (CurrentAmountDeposited >= RepairCost) //Repairs Building if it is already built
                         {
                             playerInfo.EnableDepositing(false);
                             Heal();

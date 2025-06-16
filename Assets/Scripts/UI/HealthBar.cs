@@ -36,7 +36,7 @@ public class HealthBar : MonoBehaviour
         }
         else if (entity == EntityType.Generator)
         {
-            generator = FindObjectOfType<ShieldGenerator>().GetComponent<Building>();
+            generator = FindObjectOfType<Reactor>().GetComponent<Building>();
         }
         else if (entity == EntityType.Shield)
         {

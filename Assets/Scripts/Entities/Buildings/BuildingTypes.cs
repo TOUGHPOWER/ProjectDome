@@ -7,6 +7,6 @@ public enum BuildingTypes
     House,
     Extractor,
     Turrets,
-    ShieldGenerator,
+    Reactor,
 
 }

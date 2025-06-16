@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShieldGenerator : MonoBehaviour
+public class Reactor : MonoBehaviour
 {
 
     [Header("Refs")]

@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Shield
   layers:
   - Default
   - TransparentFX
@@ -14,7 +15,7 @@ TagManager:
   - Player
   - Enemies
   - Buildings
-  - 
+  - Props
   - 
   - 
   - 
@@ -52,4 +53,7 @@ TagManager:
     locked: 0
   - name: Enemies
     uniqueID: 2911906325
+    locked: 0
+  - name: Props
+    uniqueID: 3625150553
     locked: 0

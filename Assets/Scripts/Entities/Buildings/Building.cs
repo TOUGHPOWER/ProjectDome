@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.U2D.Aseprite;
 using UnityEngine;
 
 public class Building : Entity
@@ -17,7 +18,8 @@ public class Building : Entity
     [field: SerializeField] public float BaseRepairCost { get; private set;}
     [field: SerializeField] public float RepairCost { get; private set;}
     [field: SerializeField] public float CurrentAmountDeposited { get; set;}
-    
+
+    [field: SerializeField] public bool isShielded { get; set; }
     [field: SerializeField] public bool IsBuilt { get; set; }
     [field: SerializeField] public bool PlayerInBuilding { get; set; }
 
@@ -31,8 +33,9 @@ public class Building : Entity
     // Start is called before the first frame update
     void Start()
     {
-        if (BuildingType == BuildingTypes.ShieldGenerator)
+        if (BuildingType == BuildingTypes.Reactor)
         {
+            isShielded = true;
             Build();
         }
     }
@@ -40,25 +43,28 @@ public class Building : Entity
     // Update is called once per frame
     void Update()
     {
-        // Makes
-        if(IsBuilt && CurrentHealth != lastCurrentHealth)
+        if (isShielded)
         {
-            lastCurrentHealth = CurrentHealth;
-            UpdateRepairCost();
-        }
-
-        if (PlayerInBuilding)
-        {
-            if (Input.GetButton("Jump"))
+            if (IsBuilt && CurrentHealth != lastCurrentHealth)
             {
-                TryBuying();
+                lastCurrentHealth = CurrentHealth;
+                UpdateRepairCost();
             }
-            
-            
+
+            if (PlayerInBuilding)
+            {
+                if (Input.GetButton("Jump"))
+                {
+                    TryBuying();
+                }
+
+
+            }
         }
         
+        
     }
-
+    
     private void UpdateRepairCost()
     {
         currentHPPercentage = (CurrentHealth / MaxHealth) * 100;
@@ -83,6 +89,9 @@ public class Building : Entity
 
     }
 
+    /// <summary>
+    /// Checks the type of buying the player is doing (Reparing / Building / Upgrading)
+    /// </summary>
     private void TryBuying() 
     {
 
@@ -92,9 +101,9 @@ public class Building : Entity
 
             if (IsBuilt)
             {
-                if(BuildingType == BuildingTypes.ShieldGenerator)
+                if(BuildingType == BuildingTypes.Reactor)
                 {
-                    ShieldGenerator sg = gameObject.GetComponent<ShieldGenerator>();
+                    Reactor sg = gameObject.GetComponent<Reactor>();
                     if (currentHPPercentage < 100)
                     {
                         if (CurrentAmountDeposited >= RepairCost) //Repairs Building if it is already built
@@ -140,6 +149,13 @@ public class Building : Entity
         SetupHealthValues(BuildingMaxHP);
     }
 
-
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Shield"))
+        {
+            Debug.Log("Collided with: " + collision.gameObject.name);
+            isShielded = true;
+        }
+    }
 
 }

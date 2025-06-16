@@ -30,9 +30,9 @@ public class BuildingUI : MonoBehaviour
         float currentBuildCost = parentBuilding.BuildCost - parentBuilding.CurrentAmountDeposited;
         
 
-        if (parentBuilding.BuildingType == BuildingTypes.ShieldGenerator)
+        if (parentBuilding.BuildingType == BuildingTypes.Reactor)
         {
-            float currentUpgCost = parentBuilding.GetComponent<ShieldGenerator>().upgradeCost - parentBuilding.CurrentAmountDeposited;
+            float currentUpgCost = parentBuilding.GetComponent<Reactor>().upgradeCost - parentBuilding.CurrentAmountDeposited;
             if (parentBuilding.currentHPPercentage < 100)
             {
                 buildingCostText.text = currentRepairCost.ToString();

@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using NavMeshPlus;
+using UnityEngine.AI;
+using NavMeshPlus.Components;
 
 public class MapGenerator : MonoBehaviour
 {
@@ -9,12 +12,18 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] GameObject[] props;               // Array of props to spawn
     [SerializeField] int numberOfProps = 20;           // Number of props to spawn
     [SerializeField] float minDistance = 3f;         // Minimum distance between props
-
+    [SerializeField] NavMeshSurface navMeshSurface;
     private List<Vector3> occupiedPositions = new List<Vector3>(); // Stores placed prop positions
+
+    private void Awake()
+    {
+        
+    }
 
     private void Start()
     {
         SpawnProps(); // Run the spawning logic at the start
+        navMeshSurface.BuildNavMesh();
     }
 
     void SpawnProps()

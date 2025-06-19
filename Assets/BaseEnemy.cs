@@ -14,6 +14,7 @@ public class BaseEnemy : Entity
     [SerializeField] private GameObject currentTarget;
 
     [SerializeField] private float distanceToAttack;
+    [SerializeField] float detectionRadius = 5f;
 
     private NavMeshAgent agent;
     [SerializeField] float secondsToUpdateTarget;
@@ -31,7 +32,7 @@ public class BaseEnemy : Entity
     // Update is called once per frame
     void Update()
     {
-        CheckDistanceToAttack();
+        //CheckDistanceToAttack();
         
     }
 
@@ -79,7 +80,7 @@ public class BaseEnemy : Entity
     {
         float shortestDistance = Mathf.Infinity;
         NavMeshPath pathToTarget = new NavMeshPath();
-        float sampleRadius = 20.0f;
+        
 
         foreach (GameObject target in targets)
         {
@@ -94,7 +95,7 @@ public class BaseEnemy : Entity
 
             // Ensure the position is actually on the NavMesh
             NavMeshHit hit;
-            if (!NavMesh.SamplePosition(targetPosition, out hit, sampleRadius, NavMesh.AllAreas))
+            if (!NavMesh.SamplePosition(targetPosition, out hit, detectionRadius, NavMesh.AllAreas))
             {
                 Debug.LogWarning($"Target {target.name} is not near a valid NavMesh area.");
                 continue;
@@ -108,6 +109,7 @@ public class BaseEnemy : Entity
                 if (pathToTarget.status != NavMeshPathStatus.PathComplete)
                 {
                     Debug.LogWarning($"Path to {target.name} is not complete.");
+                    agent.SetDestination(sampledPosition);
                     continue;
                 }
 
@@ -118,7 +120,8 @@ public class BaseEnemy : Entity
                 {
                     shortestDistance = distance;
                     currentTarget = target;
-                    agent.SetDestination(currentTarget.transform.position);
+                    agent.SetDestination(sampledPosition);
+
                 }
             }
             else
@@ -126,6 +129,7 @@ public class BaseEnemy : Entity
                 Debug.LogWarning($"Failed to calculate path to {target.name}");
             }
         }
+        
     }
 
     IEnumerator UpdateTarget()

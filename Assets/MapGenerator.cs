@@ -18,6 +18,7 @@ public class MapGenerator : MonoBehaviour
     private void Awake()
     {
         
+        
     }
 
     private void Start()

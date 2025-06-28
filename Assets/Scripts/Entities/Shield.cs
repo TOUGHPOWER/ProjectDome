@@ -5,7 +5,7 @@ using UnityEngine;
 public class Shield : Entity
 {
     [Header("Class Variables")]
-    [SerializeField] float startingMaxHP;
+    [SerializeField] int startingMaxHP;
     // Start is called before the first frame update
     void Start()
     {

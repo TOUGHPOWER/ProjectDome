@@ -11,13 +11,13 @@ public class Building : Entity
     public PlayerInfo playerInfo;
 
     private float lastCurrentHealth;
-    [field: SerializeField] public float BuildingMaxHP { get; private set;}
+    [field: SerializeField] public int BuildingMaxHP { get; private set;}
     [field: SerializeField] public float currentHPPercentage { get; private set;}
 
-    [field: SerializeField] public float BuildCost {get; private set;}
-    [field: SerializeField] public float BaseRepairCost { get; private set;}
-    [field: SerializeField] public float RepairCost { get; private set;}
-    [field: SerializeField] public float CurrentAmountDeposited { get; set;}
+    [field: SerializeField] public int BuildCost {get; private set;}
+    [field: SerializeField] public int BaseRepairCost { get; private set;}
+    [field: SerializeField] public int RepairCost { get; private set;}
+    [field: SerializeField] public int CurrentAmountDeposited { get; set;}
 
     [field: SerializeField] public bool isShielded { get; set; }
     [field: SerializeField] public bool IsBuilt { get; set; }
@@ -83,7 +83,7 @@ public class Building : Entity
         
         print($"Current R.C.M:{RepairCostMultiplier}");
 
-        RepairCost = Mathf.Round(BaseRepairCost * RepairCostMultiplier);
+        RepairCost = Convert.ToInt32(Mathf.Round(BaseRepairCost * RepairCostMultiplier));
 
         print($"Current Repair Cost:{RepairCost}");
 

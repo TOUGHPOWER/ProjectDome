@@ -16,6 +16,13 @@ public class CheckForPlayer : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             parentBuilding.PlayerInBuilding = true;
+            print("Hi Player");
+        }
+
+        if (collision.CompareTag("Shield"))
+        {
+            parentBuilding.isShielded = true;
+            print("Hi building");
         }
     }
 

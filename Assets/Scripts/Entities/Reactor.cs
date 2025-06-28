@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,13 +12,13 @@ public class Reactor : MonoBehaviour
 
     [Header("Generator Upgrading")]
     [SerializeField] private int maxUpgradeLevel;
-    [field: SerializeField] public float upgradeCost { get; private set;}
+    [field: SerializeField] public int upgradeCost { get; private set;}
     [field: SerializeField] public float upgCostIncreaseModifier { get; private set; }
-    [SerializeField] private float upgGenMaxHPAmount;
+    [SerializeField] private int upgGenMaxHPAmount;
 
     [Header("Shield Upgrading")]
     [SerializeField] private float upgradeScaleModifier;
-    [SerializeField] private float upgShieldMaxHPAmount;
+    [SerializeField] private int upgShieldMaxHPAmount;
     // Start is called before the first frame update
     void Start()
     {
@@ -46,7 +47,7 @@ public class Reactor : MonoBehaviour
         //Grants Player Upgrade
         //Make upgrade menu appear
 
-        upgradeCost = upgradeCost * upgCostIncreaseModifier;
+        upgradeCost = Mathf.RoundToInt(upgradeCost * upgCostIncreaseModifier);
     }
 
 }

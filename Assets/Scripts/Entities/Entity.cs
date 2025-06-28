@@ -4,13 +4,13 @@ using UnityEngine;
 
 public abstract class Entity: MonoBehaviour
 {
-    [field: SerializeField] public float CurrentHealth { get; set; }
-    [field: SerializeField] public float MaxHealth { get; set; }
+    [field: SerializeField] public int CurrentHealth { get; set; }
+    [field: SerializeField] public int MaxHealth { get; set; }
 
     [field: SerializeField] public List<ScriptableObject> CurrentPerks { get; set; }
 
     [field: SerializeField] public  int MaxPerkAmount { get; private set; }
-    public virtual void SubtractCurrentHP(float amountToReduce)
+    public virtual void SubtractCurrentHP(int amountToReduce)
     {
         if((CurrentHealth - amountToReduce) <= 0) 
         {
@@ -22,7 +22,7 @@ public abstract class Entity: MonoBehaviour
         }
         
     }
-    public virtual void AddCurrentHP(float amountToIncrease)
+    public virtual void AddCurrentHP(int amountToIncrease)
     {
         if ((CurrentHealth + amountToIncrease) >= 100)
         {
@@ -33,7 +33,7 @@ public abstract class Entity: MonoBehaviour
             CurrentHealth += amountToIncrease;
         }
     }
-    public virtual void SubtractMaxHP(float amountToReduce)
+    public virtual void SubtractMaxHP(int amountToReduce)
     {
         if ((MaxHealth - amountToReduce) <= 0)
         {
@@ -44,13 +44,13 @@ public abstract class Entity: MonoBehaviour
             MaxHealth -= amountToReduce;
         }
     }
-    public virtual void AddMaxHP(float amountToIncrease)
+    public virtual void AddMaxHP(int amountToIncrease)
     {
         MaxHealth += amountToIncrease;
         Heal();
     }
 
-    public virtual void SetupHealthValues(float buildingMaxHealth)
+    public virtual void SetupHealthValues(int buildingMaxHealth)
     {
         MaxHealth = buildingMaxHealth;
         print(MaxHealth);

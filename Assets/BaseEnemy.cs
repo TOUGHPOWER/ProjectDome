@@ -8,10 +8,12 @@ using System.IO;
 public class BaseEnemy : Entity
 {
     [Header("Class variables")]
-    [SerializeField] private float startingMaxHealth;
+    [SerializeField] private int startingMaxHealth;
 
-    [SerializeField] private List<GameObject> targets;
+    [SerializeField] private List<EntityType> targetPreferences;
+
     [SerializeField] private GameObject currentTarget;
+    
 
     [SerializeField] private float distanceToAttack;
     [SerializeField] float detectionRadius = 5f;
@@ -34,6 +36,7 @@ public class BaseEnemy : Entity
     {
         //CheckDistanceToAttack();
         
+
     }
 
     private bool CheckDistanceToAttack()
@@ -61,9 +64,6 @@ public class BaseEnemy : Entity
         
     }
 
-    
-
-
     private float GetPathLength(NavMeshPath path)
     {
         float length = 0f;
@@ -80,56 +80,43 @@ public class BaseEnemy : Entity
     {
         float shortestDistance = Mathf.Infinity;
         NavMeshPath pathToTarget = new NavMeshPath();
-        
+        GameObject bestTarget = null;
 
-        foreach (GameObject target in targets)
+        foreach (EntityType type in targetPreferences)
         {
-            Vector3 targetPosition;
-
-            // Get the Rigidbody2D position if available, else use Transform
-            Rigidbody2D rb = target.GetComponent<Rigidbody2D>();
-            if (rb != null)
-                targetPosition = rb.position;
-            else
-                targetPosition = target.transform.position;
-
-            // Ensure the position is actually on the NavMesh
-            NavMeshHit hit;
-            if (!NavMesh.SamplePosition(targetPosition, out hit, detectionRadius, NavMesh.AllAreas))
+            Target[] candidates = GameObject.FindObjectsOfType<Target>();
+            foreach (Target candidate in candidates)
             {
-                Debug.LogWarning($"Target {target.name} is not near a valid NavMesh area.");
-                continue;
-            }
+                if (candidate.targetType != type) continue;
 
-            Vector3 sampledPosition = hit.position;
+                Vector3 targetPosition;
+                Rigidbody2D rb = candidate.GetComponent<Rigidbody2D>();
+                targetPosition = rb != null ? rb.position : candidate.transform.position;
 
-            // Calculate path to the sampled position
-            if (NavMesh.CalculatePath(agent.transform.position, sampledPosition, NavMesh.AllAreas, pathToTarget))
-            {
-                if (pathToTarget.status != NavMeshPathStatus.PathComplete)
-                {
-                    Debug.LogWarning($"Path to {target.name} is not complete.");
-                    agent.SetDestination(sampledPosition);
-                    continue;
-                }
+                NavMeshHit hit;
+                if (!NavMesh.SamplePosition(targetPosition, out hit, detectionRadius, NavMesh.AllAreas)) continue;
+
+                Vector3 sampledPosition = hit.position;
+                if (!NavMesh.CalculatePath(agent.transform.position, sampledPosition, NavMesh.AllAreas, pathToTarget)) continue;
+                if (pathToTarget.status != NavMeshPathStatus.PathComplete) continue;
 
                 float distance = GetPathLength(pathToTarget);
-                Debug.Log($"Valid path to {target.name}, path length: {distance}");
-
                 if (distance < shortestDistance)
                 {
+                    print("Hi");
                     shortestDistance = distance;
-                    currentTarget = target;
+                    bestTarget = candidate.gameObject;
                     agent.SetDestination(sampledPosition);
-
                 }
             }
-            else
+
+            if (bestTarget != null)
             {
-                Debug.LogWarning($"Failed to calculate path to {target.name}");
+                currentTarget = bestTarget;
+                return; // stop after finding the best valid target of highest priority
             }
         }
-        
+
     }
 
     IEnumerator UpdateTarget()

@@ -7,8 +7,8 @@ public class Reactor : MonoBehaviour
 {
 
     [Header("Refs")]
-    [SerializeField] private Building buildingSystem;
-    [SerializeField] private Shield shield;
+    private Building buildingSystem;
+    private Shield shield;
 
     [Header("Generator Upgrading")]
     [SerializeField] private int maxUpgradeLevel;

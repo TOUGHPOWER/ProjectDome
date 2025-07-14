@@ -103,7 +103,6 @@ public class BaseEnemy : Entity
                 float distance = GetPathLength(pathToTarget);
                 if (distance < shortestDistance)
                 {
-                    print("Hi");
                     shortestDistance = distance;
                     bestTarget = candidate.gameObject;
                     agent.SetDestination(sampledPosition);

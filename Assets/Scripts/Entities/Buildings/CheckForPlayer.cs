@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CheckForPlayer : MonoBehaviour
 {
-    private Building parentBuilding;
+    [SerializeField] Building parentBuilding;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,11 +19,7 @@ public class CheckForPlayer : MonoBehaviour
             print("Hi Player");
         }
 
-        if (collision.CompareTag("Shield"))
-        {
-            parentBuilding.isShielded = true;
-            print("Hi building");
-        }
+        
     }
 
     private void OnTriggerExit2D(Collider2D collision)

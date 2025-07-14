@@ -151,9 +151,11 @@ public class Building : Entity
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log(gameObject + "Has collided with" + collision.gameObject.name);
+
         if (collision.gameObject.CompareTag("Shield"))
         {
-            Debug.Log("Collided with: " + collision.gameObject.name);
+            Debug.Log("Collided with Shield");
             isShielded = true;
         }
     }

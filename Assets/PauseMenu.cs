@@ -2,14 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shield : Entity
+public class PauseMenu : MonoBehaviour
 {
-    [Header("Class Variables")]
-    [SerializeField] int startingMaxHP;
     // Start is called before the first frame update
     void Start()
     {
-        SetupHealthValues(startingMaxHP);
+        
     }
 
     // Update is called once per frame
@@ -17,6 +15,4 @@ public class Shield : Entity
     {
         
     }
-
-    
 }

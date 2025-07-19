@@ -443,8 +443,10 @@ MonoBehaviour:
   <IsBuilt>k__BackingField: 0
   <PlayerInBuilding>k__BackingField: 0
   BuildingType: 3
-  builtSprite: {fileID: 0}
-  destroyedSprite: {fileID: 0}
+  buildingSr: {fileID: 0}
+  currentBuildingSprite: {fileID: 0}
+  builtSprite: {fileID: 21300000, guid: 9ff942e945d518b4aae1b9a2725c88aa, type: 3}
+  destroyedSprite: {fileID: 21300000, guid: 914a08bc2c90f544da58431cb428a2ef, type: 3}
 --- !u!114 &5176359266124172027
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -80,15 +80,15 @@ SpriteRenderer:
   m_SortingLayerID: 1187792961
   m_SortingLayer: 1
   m_SortingOrder: 1
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.46052867, g: 0.745283, b: 0.57892776, a: 1}
+  m_Sprite: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!61 &5159485926719483539
@@ -189,9 +189,13 @@ MonoBehaviour:
   <isShielded>k__BackingField: 0
   <IsBuilt>k__BackingField: 0
   <PlayerInBuilding>k__BackingField: 0
-  BuildingType: 0
-  builtSprite: {fileID: 0}
-  destroyedSprite: {fileID: 0}
+  BuildingType: 1
+  buildingSlot: {fileID: 8146787440499614232}
+  buildingSr: {fileID: 0}
+  currentBuildingSprite: {fileID: 0}
+  builtSprite: {fileID: 21300000, guid: 9ff942e945d518b4aae1b9a2725c88aa, type: 3}
+  destroyedSprite: {fileID: 21300000, guid: 914a08bc2c90f544da58431cb428a2ef, type: 3}
+  notShieldedColor: {r: 1, g: 0.28490567, b: 0.28490567, a: 1}
 --- !u!114 &962344567858322078
 MonoBehaviour:
   m_ObjectHideFlags: 0

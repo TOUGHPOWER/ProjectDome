@@ -10,7 +10,7 @@ public class Building : Entity
 
     public PlayerInfo playerInfo;
 
-    private float lastCurrentHealth;
+    [SerializeField] private float lastCurrentHealth;
     [field: SerializeField] public int BuildingMaxHP { get; private set;}
     [field: SerializeField] public float currentHPPercentage { get; private set;}
 
@@ -27,16 +27,27 @@ public class Building : Entity
 
     [Header("Others")]
     [SerializeField] public BuildingTypes BuildingType;
+    [SerializeField] private GameObject buildingSlot;
+    [SerializeField] private SpriteRenderer buildingSr;
+    [SerializeField] private Sprite currentBuildingSprite;
     [SerializeField] private Sprite builtSprite;
     [SerializeField] private Sprite destroyedSprite;
+    [SerializeField] private Color notShieldedColor;
 
     // Start is called before the first frame update
     void Start()
     {
+        buildingSr = gameObject.GetComponent<SpriteRenderer>();
+        buildingSr.sprite = currentBuildingSprite;
         if (BuildingType == BuildingTypes.Reactor)
         {
             isShielded = true;
             Build();
+        }
+
+        if (!isShielded)
+        {
+            buildingSlot.GetComponent<SpriteRenderer>().color = notShieldedColor;
         }
     }
 
@@ -49,6 +60,16 @@ public class Building : Entity
             {
                 lastCurrentHealth = CurrentHealth;
                 UpdateRepairCost();
+
+            }
+
+            if (IsBuilt && CurrentHealth <= 0)
+            {
+                IsBuilt = false;
+                //Display Destroyed Sprite
+                currentBuildingSprite = destroyedSprite;
+                buildingSr.sprite = destroyedSprite;
+                Debug.Log("I was destroyed");
             }
 
             if (PlayerInBuilding)
@@ -57,10 +78,13 @@ public class Building : Entity
                 {
                     TryBuying();
                 }
-
-
             }
+
+            buildingSlot.GetComponent<SpriteRenderer>().color = Color.white;
+
         }
+
+        
         
         
     }
@@ -68,11 +92,11 @@ public class Building : Entity
     private void UpdateRepairCost()
     {
         currentHPPercentage = (CurrentHealth / MaxHealth) * 100;
-        print($"Current HP %:{ currentHPPercentage}");
+        print($"Current HP %:{currentHPPercentage}");
 
         float RepairCostMultiplier = 0;
        
-        if (currentHPPercentage < 1)
+        if (currentHPPercentage < 10)
         {
             RepairCostMultiplier = 2;
         }
@@ -81,11 +105,11 @@ public class Building : Entity
             RepairCostMultiplier = float.Parse($"1.{100 - currentHPPercentage}");
         }
         
-        print($"Current R.C.M:{RepairCostMultiplier}");
+        //print($"Current R.C.M:{RepairCostMultiplier}");
 
-        RepairCost = Convert.ToInt32(Mathf.Round(BaseRepairCost * RepairCostMultiplier));
+        RepairCost = Convert.ToInt32(MathF.Round(BaseRepairCost * RepairCostMultiplier));
 
-        print($"Current Repair Cost:{RepairCost}");
+        //print($"Current Repair Cost:{RepairCost}");
 
     }
 
@@ -147,6 +171,9 @@ public class Building : Entity
     {
         IsBuilt = true;
         SetupHealthValues(BuildingMaxHP);
+        currentBuildingSprite = builtSprite;
+        buildingSr.sprite = builtSprite;
+        SubtractCurrentHP(20);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

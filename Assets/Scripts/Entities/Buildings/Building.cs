@@ -91,7 +91,7 @@ public class Building : Entity
     
     private void UpdateRepairCost()
     {
-        currentHPPercentage = MathF.Round(((float)CurrentHealth / MaxHealth) * 100);
+        currentHPPercentage = MathF.Round(((float)CurrentHealth / (float)MaxHealth) * 100);
         print($"Current HP %:{currentHPPercentage}");
 
         float RepairCostMultiplier = 0;

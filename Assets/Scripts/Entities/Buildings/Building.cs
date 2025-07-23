@@ -83,15 +83,11 @@ public class Building : Entity
             buildingSlot.GetComponent<SpriteRenderer>().color = Color.white;
 
         }
-
-        
-        
-        
     }
     
     private void UpdateRepairCost()
     {
-        currentHPPercentage = MathF.Round(((float)CurrentHealth / (float)MaxHealth) * 100);
+        currentHPPercentage = MathF.Round(((float) CurrentHealth / (float) MaxHealth) * 100);
         print($"Current HP %:{currentHPPercentage}");
 
         float RepairCostMultiplier = 0;

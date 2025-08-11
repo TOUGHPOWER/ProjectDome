@@ -9,6 +9,10 @@ public class BuildingUI : MonoBehaviour
     private Building parentBuilding;
 
     [SerializeField] TextMeshProUGUI buildingCostText;
+    [SerializeField] Image statusIcon;
+    [SerializeField] Sprite repairIcon;
+    [SerializeField] Sprite upgradeIcon;
+    [SerializeField] Sprite buildIcon;
 
 
     // Start is called before the first frame update
@@ -22,6 +26,7 @@ public class BuildingUI : MonoBehaviour
     void Update()
     {
         UpdateCostText();
+        UpdateStatusIcon();
     }
 
     private void UpdateCostText()
@@ -61,5 +66,30 @@ public class BuildingUI : MonoBehaviour
             buildingCostText.text = "";
         }
 
+    }
+
+    private void UpdateStatusIcon()
+    {
+
+        if (!parentBuilding.IsBuilt)
+        {
+            statusIcon.gameObject.SetActive(true);
+            statusIcon.sprite = buildIcon;
+        }
+        else if(parentBuilding.currentHPPercentage < 100)
+        {
+            statusIcon.gameObject.SetActive(true);
+            statusIcon.sprite = repairIcon;
+        }
+        else
+        {
+            statusIcon.gameObject.SetActive(false);
+        }
+
+        if (parentBuilding.BuildingType == BuildingTypes.Reactor && parentBuilding.currentHPPercentage >= 100)
+        {
+            statusIcon.gameObject.SetActive(true);
+            statusIcon.sprite = upgradeIcon;
+        }
     }
 }

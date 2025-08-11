@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 750244332044210365}
   - component: {fileID: 8043730104693886807}
+  - component: {fileID: 2176381647079289594}
   m_Layer: 0
   m_Name: Spawner
   m_TagString: Untagged
@@ -56,7 +57,29 @@ MonoBehaviour:
   - {fileID: 830772369580051414}
   - {fileID: 4727587275317046198}
   isSpawning: 0
-  spawnRate: 1.5
+  spawnRate: 3
+--- !u!114 &2176381647079289594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 498320728084621253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0787d532ca884c44eafd27ef94f98fd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  difficultyIncModifier: 0
+  modifierIncreaseValue: 0
+  difficulties:
+  - Easy
+  - Medium
+  - Hard
+  currentDifficulty: 
+  easyTimeframe: 0
+  mediumTimeframe: 0
+  hardTimeframe: 0
 --- !u!1001 &587752356690610848
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -7,13 +7,23 @@ public class SceneLoader : MonoBehaviour
 {
     public void LoadGame()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("Game");
 
     }
 
     public void LoadMainMenu()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void LoadWinMenu()
+    {
+        SceneManager.LoadScene("WinMenu");
+    }
+
+    public void LoadLoseScene()
+    {
+        SceneManager.LoadScene("LoseMenu");
     }
 
     public void QuitGame()

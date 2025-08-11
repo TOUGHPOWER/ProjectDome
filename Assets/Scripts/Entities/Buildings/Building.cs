@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.U2D.Aseprite;
 using UnityEngine;
+using UnityEngine.Animations;
 
 public class Building : Entity
 {
@@ -28,7 +28,7 @@ public class Building : Entity
     [Header("Others")]
     [SerializeField] public BuildingTypes BuildingType;
     [SerializeField] private GameObject buildingSlot;
-    [SerializeField] private SpriteRenderer buildingSr;
+    [SerializeField] private SpriteRenderer buildingSR;
     [SerializeField] private Sprite currentBuildingSprite;
     [SerializeField] private Sprite builtSprite;
     [SerializeField] private Sprite destroyedSprite;
@@ -37,8 +37,9 @@ public class Building : Entity
     // Start is called before the first frame update
     void Start()
     {
-        buildingSr = gameObject.GetComponent<SpriteRenderer>();
-        buildingSr.sprite = currentBuildingSprite;
+        playerInfo = FindObjectOfType<PlayerInfo>();
+        buildingSR = gameObject.GetComponent<SpriteRenderer>();
+        buildingSR.sprite = currentBuildingSprite;
         if (BuildingType == BuildingTypes.Reactor)
         {
             isShielded = true;
@@ -59,25 +60,26 @@ public class Building : Entity
             if (IsBuilt && CurrentHealth != lastCurrentHealth)
             {
                 lastCurrentHealth = CurrentHealth;
-                UpdateRepairCost();
 
-            }
-
-            if (IsBuilt && CurrentHealth <= 0)
-            {
-                IsBuilt = false;
-                //Display Destroyed Sprite
-                currentBuildingSprite = destroyedSprite;
-                buildingSr.sprite = destroyedSprite;
-                Debug.Log("I was destroyed");
-            }
-
-            if (PlayerInBuilding)
-            {
-                if (Input.GetButton("Jump"))
+                if (CurrentHealth <= 0)
                 {
-                    TryBuying();
+                    IsBuilt = false;
+                    //Display Destroyed Sprite
+                    currentBuildingSprite = destroyedSprite;
+                    buildingSR.sprite = destroyedSprite;
+                    Debug.Log("I was destroyed");
                 }
+                else
+                {
+                    UpdateRepairCost();
+                }
+
+            }
+
+            
+            if (PlayerInBuilding && !playerInfo.isDepositing && playerInfo.canDeposit)
+            {
+                StartCoroutine(playerInfo.Depositing(this));
             }
 
             buildingSlot.GetComponent<SpriteRenderer>().color = Color.white;
@@ -109,67 +111,32 @@ public class Building : Entity
 
     }
 
-    /// <summary>
-    /// Checks the type of buying the player is doing (Reparing / Building / Upgrading)
-    /// </summary>
-    private void TryBuying() 
-    {
+    
 
-        if (!playerInfo.isDepositing) 
-        {
-            StartCoroutine(playerInfo.Depositing(this));
-
-            if (IsBuilt)
-            {
-                if(BuildingType == BuildingTypes.Reactor)
-                {
-                    Reactor sg = gameObject.GetComponent<Reactor>();
-                    if (currentHPPercentage < 100)
-                    {
-                        if (CurrentAmountDeposited >= RepairCost) //Repairs Building if it is already built
-                        {
-                            playerInfo.EnableDepositing(false);
-                            Heal();
-                            //Change Sprite
-                            CurrentAmountDeposited = 0;
-                        }
-                    }
-                    else if(CurrentAmountDeposited>= sg.upgradeCost)
-                    {
-                        sg.Upgrade();
-                        CurrentAmountDeposited = 0;
-                        playerInfo.EnableDepositing(false);
-                    }
-                    
-                }
-                else if (CurrentAmountDeposited >= RepairCost)
-                {
-                    //Repairs Building if it is already built
-                    playerInfo.EnableDepositing(false);
-                    Heal();
-                    //Change Sprite
-                    CurrentAmountDeposited = 0;
-                }
-            }
-            else if (!IsBuilt) //Builds Building instead
-            {
-                if (CurrentAmountDeposited >= BuildCost)
-                {
-                    playerInfo.EnableDepositing(false);
-                    Build();
-                    CurrentAmountDeposited = 0;
-                }
-            }
-        }
-    }
-
-    private void Build()
+    public void Build()
     {
         IsBuilt = true;
         SetupHealthValues(BuildingMaxHP);
         currentBuildingSprite = builtSprite;
-        buildingSr.sprite = builtSprite;
-        SubtractCurrentHP(20);
+        buildingSR.sprite = builtSprite;
+        gameObject.AddComponent<Target>();
+
+        if(BuildingType == BuildingTypes.Reactor)
+        {
+            gameObject.GetComponent<Target>().targetType = EntityType.Reactor;
+        }
+        else
+        {
+            gameObject.GetComponent<Target>().targetType = EntityType.Building;
+        }
+
+        if(BuildingType == BuildingTypes.Extractor)
+        {
+            StartCoroutine(GetComponent<Extractor>().ProduceEnergy());
+            GetComponent<Animator>().SetBool("ExtractorBuilt", true);
+            //GetComponent<Animator>().runtimeAnimatorController = GetComponent<Extractor>().extractorAnim;
+        }
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

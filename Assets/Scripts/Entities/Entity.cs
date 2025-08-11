@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations;
 
 public abstract class Entity: MonoBehaviour
 {
@@ -10,17 +11,32 @@ public abstract class Entity: MonoBehaviour
     [field: SerializeField] public List<ScriptableObject> CurrentPerks { get; set; }
 
     [field: SerializeField] public  int MaxPerkAmount { get; private set; }
+
+    [field: SerializeField] public EntityType entityType { get; private set; }
+
+    private Vector2 RespawnLocation;
+
+    [SerializeField] private Animator entAnimator;
+    [SerializeField] private GameObject onDeathDropObject;
+    [SerializeField] private GameObject dieVFX;
+    [SerializeField] private SceneLoader sceneLoader;
+    private void Start()
+    {
+        entAnimator = GetComponent<Animator>();
+        RespawnLocation = transform.position;
+        sceneLoader = FindAnyObjectByType<SceneLoader>();
+    }
+
     public virtual void SubtractCurrentHP(int amountToReduce)
     {
-        if((CurrentHealth - amountToReduce) <= 0) 
+        entAnimator.SetTrigger("GetHit");
+        CurrentHealth -= amountToReduce;
+        if (CurrentHealth <= 0) 
         {
-            CurrentHealth = 0;
+
+            Die();
+            
         }
-        else
-        {
-            CurrentHealth -= amountToReduce;
-        }
-        
     }
     public virtual void AddCurrentHP(int amountToIncrease)
     {
@@ -37,7 +53,7 @@ public abstract class Entity: MonoBehaviour
     {
         if ((MaxHealth - amountToReduce) <= 0)
         {
-            MaxHealth = 10;
+            Die();
         }
         else
         {
@@ -47,20 +63,97 @@ public abstract class Entity: MonoBehaviour
     public virtual void AddMaxHP(int amountToIncrease)
     {
         MaxHealth += amountToIncrease;
-        Heal();
+        FullHPHeal();
     }
 
-    public virtual void SetupHealthValues(int buildingMaxHealth)
+    public virtual void SetupHealthValues(int entityMaxHealth)
     {
-        MaxHealth = buildingMaxHealth;
+        MaxHealth = entityMaxHealth;
         print(MaxHealth);
-        CurrentHealth = MaxHealth;
+        FullHPHeal();
         print(CurrentHealth);
+        
     }
 
-    public void Heal()
+    public void FullHPHeal()
     {
         CurrentHealth = MaxHealth;
+    }
+
+    public void Respawn()
+    {
+        transform.position = RespawnLocation;
+        FullHPHeal();
+    }
+
+    public void DisableEntity()
+    {
+        
+        switch (entityType)
+        {
+            case EntityType.Building:
+                gameObject.SetActive(false);
+                break;
+            case EntityType.Shield:
+                gameObject.SetActive(false);
+                break;
+            case EntityType.Reactor:
+                gameObject.SetActive(false);
+                break;
+
+        }
+    }
+
+    public void EnableEntity()
+    {
+        gameObject.SetActive(true);
+
+        switch (entityType)
+        {
+            case EntityType.Building:
+                SetupHealthValues(MaxHealth);
+                break;
+            case EntityType.Shield:
+                SetupHealthValues(MaxHealth);
+                break;
+            case EntityType.Reactor:
+                SetupHealthValues(MaxHealth);
+                break;
+
+        }
+    }
+
+    public void Die()
+    {
+        if (!(entityType == EntityType.Building || entityType == EntityType.Reactor || entityType == EntityType.Shield || entityType == EntityType.Player))
+        {
+            Instantiate(dieVFX, transform.position, Quaternion.identity);
+
+            Instantiate(onDeathDropObject, transform.position, Quaternion.identity);
+        }
+        
+
+
+        switch (entityType)
+        {
+            case EntityType.Enemy:
+                Destroy(gameObject);
+                break;
+            case EntityType.Player:
+                Respawn();
+                break;
+            case EntityType.Building:
+                DisableEntity();
+                break;
+            case EntityType.Shield:
+                DisableEntity();
+                break;
+            case EntityType.Reactor:
+                sceneLoader.LoadLoseScene();
+                break;
+
+        }
+        
     }
 
 }

@@ -16,44 +16,97 @@ public class PlayerInfo : Entity
 
     [SerializeField] float despositRate = 1f;
     [field: SerializeField] public bool isDepositing { get; set; }
-    [SerializeField] bool canDeposit;
+    [field: SerializeField] public bool canDeposit { get; set; }
 
 
     // Start is called before the first frame update
     void Start()
     {
         SetupHealthValues(BaseMaxHealth);
-        EnableDepositing(true);
+        canDeposit = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-    }
-
-    public IEnumerator Depositing(Building targetBuilding)
-    {
-        if (canDeposit)
+        if (CurrentNumEnergy <= 0)
         {
-            isDepositing = true;
-            while ((Input.GetButton("Jump") && isDepositing) && canDeposit)
-            {
-                CurrentNumEnergy -= 1;
-                targetBuilding.CurrentAmountDeposited += 1;
-                yield return new WaitForSeconds(despositRate);
-            }
+            CurrentNumEnergy = 0;
 
-            isDepositing = false;
+            canDeposit = false;
         }
         
 
 
     }
 
-    public void EnableDepositing(bool canPlayerDeposit)
+    public IEnumerator Depositing(Building targetBuilding)
     {
-        canDeposit = canPlayerDeposit;
+        isDepositing = true;
+
+        while (canDeposit && targetBuilding.PlayerInBuilding)
+        {
+            if (CurrentNumEnergy <= 0)
+            {
+                break;
+            }
+
+            CurrentNumEnergy -= 1;
+            targetBuilding.CurrentAmountDeposited += 1;
+
+            // Check if enough has been deposited
+            if (targetBuilding.IsBuilt)
+            {
+                if (targetBuilding.BuildingType == BuildingTypes.Reactor)
+                {
+                    Reactor reactor = targetBuilding.GetComponent<Reactor>();
+                    if (targetBuilding.currentHPPercentage < 100 &&
+                        targetBuilding.CurrentAmountDeposited >= targetBuilding.RepairCost)
+                    {
+                        targetBuilding.FullHPHeal();
+                        targetBuilding.CurrentAmountDeposited = 0;
+                        break;
+                    }
+                    else if (targetBuilding.CurrentAmountDeposited >= reactor.upgradeCost)
+                    {
+                        reactor.Upgrade();
+                        targetBuilding.CurrentAmountDeposited = 0;
+                        break;
+                    }
+                }
+                else if (targetBuilding.CurrentAmountDeposited >= targetBuilding.RepairCost)
+                {
+                    targetBuilding.FullHPHeal();
+                    targetBuilding.CurrentAmountDeposited = 0;
+                    break;
+                }
+            }
+            else if (!targetBuilding.IsBuilt && targetBuilding.CurrentAmountDeposited >= targetBuilding.BuildCost)
+            {
+                targetBuilding.Build();
+                targetBuilding.CurrentAmountDeposited = 0;
+                break;
+            }
+
+            yield return new WaitForSeconds(despositRate);
+        }
+
+        canDeposit = false;
+        isDepositing = false;
+    }
+
+    public void DisableDepositing(Building thebuilding)
+    {
+        print("hello");
+        canDeposit = false;
+        print("Stop Deposit");
+        StopAllCoroutines();
+        
+    }
+
+    public void AddEnergy(int amountToAdd)
+    {
+        CurrentNumEnergy += amountToAdd;
     }
     
 }

@@ -7,7 +7,8 @@ public class Currency : MonoBehaviour
     [SerializeField] PlayerInfo playerInfo;
     [SerializeField] Currencies currencyType;
     [SerializeField] Sprite currencyObjectSprite;
-    [SerializeField] int value;
+    [SerializeField] int minValue;
+    [SerializeField] int maxValue;
 
     // Start is called before the first frame update
     void Start()
@@ -37,7 +38,7 @@ public class Currency : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            AddCurrency(value);
+            AddCurrency(Random.Range(minValue,maxValue));
             Destroy(gameObject);
         }
     }

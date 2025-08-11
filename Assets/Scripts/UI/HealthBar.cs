@@ -34,7 +34,7 @@ public class HealthBar : MonoBehaviour
         {
             playerInfo = FindObjectOfType<PlayerInfo>();
         }
-        else if (entity == EntityType.Generator)
+        else if (entity == EntityType.Reactor)
         {
             generator = FindObjectOfType<Reactor>().GetComponent<Building>();
         }
@@ -50,7 +50,7 @@ public class HealthBar : MonoBehaviour
         {
             SetupHealthBarValues(playerInfo);
         }
-        else if (entity == EntityType.Generator)
+        else if (entity == EntityType.Reactor)
         {
             SetupHealthBarValues(generator);
         }

@@ -6,7 +6,7 @@ public enum EntityType
 {
     Player,
     Building,
-    Generator,
+    Reactor,
     Shield,
     Enemy
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Reactor : MonoBehaviour
 {
@@ -9,9 +10,11 @@ public class Reactor : MonoBehaviour
     [Header("Refs")]
     private Building buildingSystem;
     private Shield shield;
+    [SerializeField] SceneLoader sceneLoader;
 
     [Header("Generator Upgrading")]
-    [SerializeField] private int maxUpgradeLevel;
+    [SerializeField] public int currentUpgradeLevel;
+    [SerializeField] public int maxUpgradeLevel;
     [field: SerializeField] public int upgradeCost { get; private set;}
     [field: SerializeField] public float upgCostIncreaseModifier { get; private set; }
     [SerializeField] private int upgGenMaxHPAmount;
@@ -30,11 +33,21 @@ public class Reactor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (buildingSystem.CurrentHealth <= 0)
+        {
+            sceneLoader.LoadLoseScene();
+            print("Load Lose Scene");
+        }
     }
 
     public void Upgrade()
     {
+        currentUpgradeLevel++;
+        if(currentUpgradeLevel >= maxUpgradeLevel)
+        {
+            sceneLoader.LoadWinMenu();
+        }
+        
         //Increase Generator Max HP and Heal to Max
         buildingSystem.AddMaxHP(upgGenMaxHPAmount);
 
@@ -48,6 +61,8 @@ public class Reactor : MonoBehaviour
         //Make upgrade menu appear
 
         upgradeCost = Mathf.RoundToInt(upgradeCost * upgCostIncreaseModifier);
+
+
     }
 
 }

@@ -7,6 +7,7 @@ TagManager:
   - Shield
   - Building
   - Reactor
+  - PlayerAttack
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - Buildings
   - Props
   - Shield
-  - 
+  - GROUND
   - 
   - 
   - 
@@ -44,6 +45,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Enemies
+    uniqueID: 2911906325
+    locked: 0
   - name: Buildings
     uniqueID: 1187792961
     locked: 0
@@ -52,9 +56,6 @@ TagManager:
     locked: 0
   - name: Shield
     uniqueID: 491564679
-    locked: 0
-  - name: Enemies
-    uniqueID: 2911906325
     locked: 0
   - name: Props
     uniqueID: 3625150553

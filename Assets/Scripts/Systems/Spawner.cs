@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    [SerializeField] List<GameObject> enemiesToSpawn;
+    [field:SerializeField] public List<GameObject> EnemiesToSpawn {get; private set; }
 
+    public GameObject recentSpawnedEnemy;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +21,6 @@ public class Spawner : MonoBehaviour
 
     public void Spawn()
     {
-        Instantiate(enemiesToSpawn[Random.Range(0, enemiesToSpawn.Count)],transform.position, Quaternion.identity);
+        recentSpawnedEnemy = Instantiate(EnemiesToSpawn[Random.Range(0, EnemiesToSpawn.Count)],transform.position, Quaternion.identity);
     }
 }

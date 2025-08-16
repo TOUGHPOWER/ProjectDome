@@ -9,7 +9,7 @@ public class Reactor : MonoBehaviour
 
     [Header("Refs")]
     private Building buildingSystem;
-    private Shield shield;
+    [field: SerializeField] public GameObject shieldObj { get; private set; }
     [SerializeField] SceneLoader sceneLoader;
 
     [Header("Generator Upgrading")]
@@ -26,7 +26,7 @@ public class Reactor : MonoBehaviour
     void Start()
     {
         buildingSystem = GetComponent<Building>();
-        shield = GetComponentInChildren<Shield>();
+        
         
     }
 
@@ -42,6 +42,7 @@ public class Reactor : MonoBehaviour
 
     public void Upgrade()
     {
+        Shield shield = shieldObj.GetComponent<Shield>();
         currentUpgradeLevel++;
         if(currentUpgradeLevel >= maxUpgradeLevel)
         {
@@ -49,10 +50,10 @@ public class Reactor : MonoBehaviour
         }
         
         //Increase Generator Max HP and Heal to Max
-        buildingSystem.AddMaxHP(upgGenMaxHPAmount);
+        buildingSystem.IncreaseMaxHP(upgGenMaxHPAmount);
 
         //Increase Shield Max HP and Heal to Max
-        shield.AddMaxHP(upgShieldMaxHPAmount);
+        shield.IncreaseMaxHP(upgShieldMaxHPAmount);
 
         //Upgrade Shield Radius/Scale
         shield.transform.localScale = new Vector2 (shield.transform.localScale.x*upgradeScaleModifier, shield.transform.localScale.y * upgradeScaleModifier);

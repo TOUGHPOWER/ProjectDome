@@ -50,6 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0edc18cacd6dc1b4b9f8791d1bcb099d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  difficultyManager: {fileID: 2176381647079289594}
   availableSpawners:
   - {fileID: 3329778366570083063}
   - {fileID: 3172269600135989733}
@@ -70,16 +71,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0787d532ca884c44eafd27ef94f98fd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  difficultyIncModifier: 0
-  modifierIncreaseValue: 0
+  difficultyIncModifier: 1
+  modifierIncreaseValue: 0.6
   difficulties:
   - Easy
   - Medium
   - Hard
   currentDifficulty: 
-  easyTimeframe: 0
-  mediumTimeframe: 0
-  hardTimeframe: 0
+  enemyPrefabs:
+  - {fileID: 7006265801739119992, guid: 830af522aebf1c847a5c9e009b813962, type: 3}
 --- !u!1001 &587752356690610848
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -88,6 +88,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 750244332044210365}
     m_Modifications:
+    - target: {fileID: 2746529948952033367, guid: 4717b6b83f434b747ac687cb22874440, type: 3}
+      propertyPath: <enemiesToSpawn>k__BackingField.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2746529948952033367, guid: 4717b6b83f434b747ac687cb22874440, type: 3}
+      propertyPath: <enemiesToSpawn>k__BackingField.Array.data[0]
+      value: 
+      objectReference: {fileID: 7006265801739119992, guid: 830af522aebf1c847a5c9e009b813962, type: 3}
     - target: {fileID: 3593750148283021467, guid: 4717b6b83f434b747ac687cb22874440, type: 3}
       propertyPath: m_Name
       value: SpawnPoint
@@ -161,6 +169,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 750244332044210365}
     m_Modifications:
+    - target: {fileID: 2746529948952033367, guid: 4717b6b83f434b747ac687cb22874440, type: 3}
+      propertyPath: <enemiesToSpawn>k__BackingField.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2746529948952033367, guid: 4717b6b83f434b747ac687cb22874440, type: 3}
+      propertyPath: <enemiesToSpawn>k__BackingField.Array.data[0]
+      value: 
+      objectReference: {fileID: 7006265801739119992, guid: 830af522aebf1c847a5c9e009b813962, type: 3}
+    - target: {fileID: 2746529948952033367, guid: 4717b6b83f434b747ac687cb22874440, type: 3}
+      propertyPath: <enemiesToSpawn>k__BackingField.Array.data[1]
+      value: 
+      objectReference: {fileID: 7006265801739119992, guid: 830af522aebf1c847a5c9e009b813962, type: 3}
+    - target: {fileID: 2746529948952033367, guid: 4717b6b83f434b747ac687cb22874440, type: 3}
+      propertyPath: <enemiesToSpawn>k__BackingField.Array.data[2]
+      value: 
+      objectReference: {fileID: 7006265801739119992, guid: 830af522aebf1c847a5c9e009b813962, type: 3}
     - target: {fileID: 3593750148283021467, guid: 4717b6b83f434b747ac687cb22874440, type: 3}
       propertyPath: m_Name
       value: SpawnPoint (1)
@@ -234,6 +258,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 750244332044210365}
     m_Modifications:
+    - target: {fileID: 2746529948952033367, guid: 4717b6b83f434b747ac687cb22874440, type: 3}
+      propertyPath: <enemiesToSpawn>k__BackingField.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2746529948952033367, guid: 4717b6b83f434b747ac687cb22874440, type: 3}
+      propertyPath: <enemiesToSpawn>k__BackingField.Array.data[0]
+      value: 
+      objectReference: {fileID: 7006265801739119992, guid: 830af522aebf1c847a5c9e009b813962, type: 3}
+    - target: {fileID: 2746529948952033367, guid: 4717b6b83f434b747ac687cb22874440, type: 3}
+      propertyPath: <enemiesToSpawn>k__BackingField.Array.data[1]
+      value: 
+      objectReference: {fileID: 7006265801739119992, guid: 830af522aebf1c847a5c9e009b813962, type: 3}
+    - target: {fileID: 2746529948952033367, guid: 4717b6b83f434b747ac687cb22874440, type: 3}
+      propertyPath: <enemiesToSpawn>k__BackingField.Array.data[2]
+      value: 
+      objectReference: {fileID: 7006265801739119992, guid: 830af522aebf1c847a5c9e009b813962, type: 3}
     - target: {fileID: 3593750148283021467, guid: 4717b6b83f434b747ac687cb22874440, type: 3}
       propertyPath: m_Name
       value: SpawnPoint (3)
@@ -307,6 +347,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 750244332044210365}
     m_Modifications:
+    - target: {fileID: 2746529948952033367, guid: 4717b6b83f434b747ac687cb22874440, type: 3}
+      propertyPath: <enemiesToSpawn>k__BackingField.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2746529948952033367, guid: 4717b6b83f434b747ac687cb22874440, type: 3}
+      propertyPath: <enemiesToSpawn>k__BackingField.Array.data[0]
+      value: 
+      objectReference: {fileID: 7006265801739119992, guid: 830af522aebf1c847a5c9e009b813962, type: 3}
+    - target: {fileID: 2746529948952033367, guid: 4717b6b83f434b747ac687cb22874440, type: 3}
+      propertyPath: <enemiesToSpawn>k__BackingField.Array.data[1]
+      value: 
+      objectReference: {fileID: 7006265801739119992, guid: 830af522aebf1c847a5c9e009b813962, type: 3}
+    - target: {fileID: 2746529948952033367, guid: 4717b6b83f434b747ac687cb22874440, type: 3}
+      propertyPath: <enemiesToSpawn>k__BackingField.Array.data[2]
+      value: 
+      objectReference: {fileID: 7006265801739119992, guid: 830af522aebf1c847a5c9e009b813962, type: 3}
     - target: {fileID: 3593750148283021467, guid: 4717b6b83f434b747ac687cb22874440, type: 3}
       propertyPath: m_Name
       value: SpawnPoint (2)
@@ -380,6 +436,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 750244332044210365}
     m_Modifications:
+    - target: {fileID: 2746529948952033367, guid: 4717b6b83f434b747ac687cb22874440, type: 3}
+      propertyPath: <enemiesToSpawn>k__BackingField.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2746529948952033367, guid: 4717b6b83f434b747ac687cb22874440, type: 3}
+      propertyPath: <enemiesToSpawn>k__BackingField.Array.data[0]
+      value: 
+      objectReference: {fileID: 7006265801739119992, guid: 830af522aebf1c847a5c9e009b813962, type: 3}
+    - target: {fileID: 2746529948952033367, guid: 4717b6b83f434b747ac687cb22874440, type: 3}
+      propertyPath: <enemiesToSpawn>k__BackingField.Array.data[1]
+      value: 
+      objectReference: {fileID: 7006265801739119992, guid: 830af522aebf1c847a5c9e009b813962, type: 3}
+    - target: {fileID: 2746529948952033367, guid: 4717b6b83f434b747ac687cb22874440, type: 3}
+      propertyPath: <enemiesToSpawn>k__BackingField.Array.data[2]
+      value: 
+      objectReference: {fileID: 7006265801739119992, guid: 830af522aebf1c847a5c9e009b813962, type: 3}
     - target: {fileID: 3593750148283021467, guid: 4717b6b83f434b747ac687cb22874440, type: 3}
       propertyPath: m_Name
       value: SpawnPoint (4)

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
+    [SerializeField] DifficultyManager difficultyManager;
+
     [SerializeField] List<Spawner> availableSpawners;
 
     [SerializeField] bool isSpawning;
@@ -13,6 +15,7 @@ public class SpawnManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        difficultyManager = GetComponent<DifficultyManager>();
         StartCoroutine(SpawnEnemies());
     }
 
@@ -27,7 +30,17 @@ public class SpawnManager : MonoBehaviour
         isSpawning = true;
         while (isSpawning)
         {
+            
+            foreach (Spawner spawner in availableSpawners)
+            {
+                if (spawner.recentSpawnedEnemy != null)
+                {
+                    difficultyManager.UpdateEnemyStats(spawner.recentSpawnedEnemy.GetComponent<BaseEnemy>());
+                }
+                
+            }
             availableSpawners[Random.Range(0,availableSpawners.Count)].Spawn();
+            
             yield return new WaitForSeconds(spawnRate);
         }
     }

@@ -60,21 +60,29 @@ public class PlayerInfo : Entity
                 if (targetBuilding.BuildingType == BuildingTypes.Reactor)
                 {
                     Reactor reactor = targetBuilding.GetComponent<Reactor>();
-                    if (targetBuilding.currentHPPercentage < 100 &&
+                    if (targetBuilding.needsRepairs &&
                         targetBuilding.CurrentAmountDeposited >= targetBuilding.RepairCost)
                     {
                         targetBuilding.FullHPHeal();
                         targetBuilding.CurrentAmountDeposited = 0;
+                        if (!reactor.shieldObj.activeInHierarchy)
+                        {
+                            reactor.shieldObj.SetActive(true);
+                        }
                         break;
                     }
-                    else if (targetBuilding.CurrentAmountDeposited >= reactor.upgradeCost)
+                    else if (!targetBuilding.needsRepairs && targetBuilding.CurrentAmountDeposited >= reactor.upgradeCost)
                     {
                         reactor.Upgrade();
                         targetBuilding.CurrentAmountDeposited = 0;
+                        if (!reactor.shieldObj.activeInHierarchy)
+                        {
+                            reactor.shieldObj.SetActive(true);
+                        }
                         break;
                     }
                 }
-                else if (targetBuilding.CurrentAmountDeposited >= targetBuilding.RepairCost)
+                else if (targetBuilding.needsRepairs && targetBuilding.CurrentAmountDeposited >= targetBuilding.RepairCost)
                 {
                     targetBuilding.FullHPHeal();
                     targetBuilding.CurrentAmountDeposited = 0;

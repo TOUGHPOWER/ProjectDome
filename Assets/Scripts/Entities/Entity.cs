@@ -27,10 +27,10 @@ public abstract class Entity: MonoBehaviour
         sceneLoader = FindAnyObjectByType<SceneLoader>();
     }
 
-    public virtual void SubtractCurrentHP(int amountToReduce)
+    public virtual void TakeDamage(int amountToReduceHP)
     {
         entAnimator.SetTrigger("GetHit");
-        CurrentHealth -= amountToReduce;
+        CurrentHealth -= amountToReduceHP;
         if (CurrentHealth <= 0) 
         {
 
@@ -38,18 +38,18 @@ public abstract class Entity: MonoBehaviour
             
         }
     }
-    public virtual void AddCurrentHP(int amountToIncrease)
+    public virtual void Heal(int amountToIncreaseHP)
     {
-        if ((CurrentHealth + amountToIncrease) >= 100)
+        if ((CurrentHealth + amountToIncreaseHP) >= 100)
         {
             CurrentHealth = MaxHealth;
         }
         else
         {
-            CurrentHealth += amountToIncrease;
+            CurrentHealth += amountToIncreaseHP;
         }
     }
-    public virtual void SubtractMaxHP(int amountToReduce)
+    public virtual void ReduceMaxHP(int amountToReduce)
     {
         if ((MaxHealth - amountToReduce) <= 0)
         {
@@ -60,7 +60,7 @@ public abstract class Entity: MonoBehaviour
             MaxHealth -= amountToReduce;
         }
     }
-    public virtual void AddMaxHP(int amountToIncrease)
+    public virtual void IncreaseMaxHP(int amountToIncrease)
     {
         MaxHealth += amountToIncrease;
         FullHPHeal();
@@ -69,9 +69,7 @@ public abstract class Entity: MonoBehaviour
     public virtual void SetupHealthValues(int entityMaxHealth)
     {
         MaxHealth = entityMaxHealth;
-        print(MaxHealth);
         FullHPHeal();
-        print(CurrentHealth);
         
     }
 

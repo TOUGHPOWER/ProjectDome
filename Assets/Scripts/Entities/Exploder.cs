@@ -7,7 +7,6 @@ public class Exploder : MonoBehaviour
 {
     private BaseEnemy enemyScript;
 
-    [SerializeField] int damage;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,7 +25,7 @@ public class Exploder : MonoBehaviour
 
         if (collision.gameObject.CompareTag("PlayerAttack"))
         {
-            enemyScript.SubtractCurrentHP(collision.gameObject.GetComponent<CircleAttack>().damageValue);
+            enemyScript.TakeDamage(collision.gameObject.GetComponent<CircleAttack>().damageValue);
         }
 
     }
@@ -34,7 +33,7 @@ public class Exploder : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<PlayerInfo>().SubtractCurrentHP(damage);
+            collision.gameObject.GetComponent<PlayerInfo>().TakeDamage(enemyScript.Damage);
             
             print($"Touched:{collision.gameObject.name}");
 
@@ -46,14 +45,14 @@ public class Exploder : MonoBehaviour
             Building buildingTouched = collision.gameObject.GetComponent<Building>();
             if (buildingTouched.IsBuilt)
             {
-                buildingTouched.SubtractCurrentHP(damage);
+                buildingTouched.TakeDamage(enemyScript.Damage);
                 enemyScript.Die();
             }
 
         }
         else if (collision.gameObject.CompareTag("Shield"))
         {
-            collision.gameObject.GetComponent<Shield>().SubtractCurrentHP(damage);
+            collision.gameObject.GetComponent<Shield>().TakeDamage(enemyScript.Damage);
             print($"Touched:{collision.gameObject.name}");
             enemyScript.Die();
         }

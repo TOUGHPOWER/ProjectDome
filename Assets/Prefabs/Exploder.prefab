@@ -185,7 +185,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.3
   m_Speed: 2
-  m_Acceleration: 1
+  m_Acceleration: 0.2
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 1
@@ -217,12 +217,13 @@ MonoBehaviour:
   onDeathDropObject: {fileID: 8109511994651946069, guid: a76f2286ee0fd764c969831dddb1db58, type: 3}
   dieVFX: {fileID: 2098443394945949105, guid: a567865970468554d93947e8ba633808, type: 3}
   sceneLoader: {fileID: 0}
-  <startingMaxHealth>k__BackingField: 10
+  <StartingMaxHealth>k__BackingField: 5
+  <Damage>k__BackingField: 10
   targetPreferences: 03000000020000000100000000000000
+  <Agent>k__BackingField: {fileID: 0}
   currentTarget: {fileID: 0}
   distanceToAttack: 3
-  detectionRadius: 20
-  <agent>k__BackingField: {fileID: 0}
+  detectionRadius: 5
   secondsToUpdateTarget: 0.5
 --- !u!114 &767789898031979761
 MonoBehaviour:
@@ -236,7 +237,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27f8d7bea0c4da34da813d7e8a6406d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 20
 --- !u!114 &2173389483102211007
 MonoBehaviour:
   m_ObjectHideFlags: 0

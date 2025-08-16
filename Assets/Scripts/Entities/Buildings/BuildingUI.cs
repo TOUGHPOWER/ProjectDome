@@ -38,7 +38,7 @@ public class BuildingUI : MonoBehaviour
         if (parentBuilding.BuildingType == BuildingTypes.Reactor)
         {
             float currentUpgCost = parentBuilding.GetComponent<Reactor>().upgradeCost - parentBuilding.CurrentAmountDeposited;
-            if (parentBuilding.currentHPPercentage < 100)
+            if (parentBuilding.needsRepairs)
             {
                 buildingCostText.text = currentRepairCost.ToString();
             }
@@ -48,7 +48,7 @@ public class BuildingUI : MonoBehaviour
             }
 
         }
-        else if (parentBuilding.IsBuilt)
+        else if (parentBuilding.IsBuilt && parentBuilding.needsRepairs)
         {
             buildingCostText.text = currentRepairCost.ToString();
         }
@@ -71,12 +71,12 @@ public class BuildingUI : MonoBehaviour
     private void UpdateStatusIcon()
     {
 
-        if (!parentBuilding.IsBuilt)
+        if (!parentBuilding.IsBuilt && parentBuilding.isShielded)
         {
             statusIcon.gameObject.SetActive(true);
             statusIcon.sprite = buildIcon;
         }
-        else if(parentBuilding.currentHPPercentage < 100)
+        else if(parentBuilding.IsBuilt && parentBuilding.needsRepairs)
         {
             statusIcon.gameObject.SetActive(true);
             statusIcon.sprite = repairIcon;

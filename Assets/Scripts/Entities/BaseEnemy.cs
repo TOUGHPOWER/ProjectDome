@@ -9,10 +9,15 @@ using System;
 public class BaseEnemy : Entity
 {
     
-    [field:SerializeField] public int startingMaxHealth { set; get; }
+    [field:SerializeField] public int StartingMaxHealth { get; set; }
+    [field: SerializeField] public int Damage { get; private set; }
 
     [Header("AI")]
+    
+
     [SerializeField] private List<EntityType> targetPreferences;
+
+    [field: SerializeField] public NavMeshAgent Agent { private set; get; }
 
     [SerializeField] private GameObject currentTarget;
     
@@ -20,17 +25,20 @@ public class BaseEnemy : Entity
     [SerializeField] private float distanceToAttack;
     [SerializeField] float detectionRadius = 5f;
 
-    [field: SerializeField] public NavMeshAgent agent { private set; get; }
-    [SerializeField] float secondsToUpdateTarget;
     
+    [SerializeField] float secondsToUpdateTarget;
 
+    private void Awake()
+    {
+        Agent = GetComponent<NavMeshAgent>();
+    }
     // Start is called before the first frame update
     void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
-        agent.updateRotation = false;
-        agent.updateUpAxis = false;
-        SetupHealthValues(startingMaxHealth);
+        
+        Agent.updateRotation = false;
+        Agent.updateUpAxis = false;
+        SetupHealthValues(StartingMaxHealth);
         StartCoroutine(UpdateTarget());
     }
 
@@ -44,13 +52,13 @@ public class BaseEnemy : Entity
 
     private bool CheckDistanceToAttack()
     {
-        if (!agent.isStopped && agent.remainingDistance <= distanceToAttack )
+        if (!Agent.isStopped && Agent.remainingDistance <= distanceToAttack )
         {
             return true;
         }
         else
         {
-            agent.SetDestination(currentTarget.transform.position);
+            Agent.SetDestination(currentTarget.transform.position);
             return false;
         }
 
@@ -61,7 +69,7 @@ public class BaseEnemy : Entity
     {
         if (CheckDistanceToAttack() == true)
         {
-            agent.isStopped = true;
+            Agent.isStopped = true;
             //Do attack here
         }
         
@@ -100,7 +108,7 @@ public class BaseEnemy : Entity
                 if (!NavMesh.SamplePosition(targetPosition, out hit, detectionRadius, NavMesh.AllAreas)) continue;
 
                 Vector3 sampledPosition = hit.position;
-                if (!NavMesh.CalculatePath(agent.transform.position, sampledPosition, NavMesh.AllAreas, pathToTarget)) continue;
+                if (!NavMesh.CalculatePath(Agent.transform.position, sampledPosition, NavMesh.AllAreas, pathToTarget)) continue;
                 if (pathToTarget.status != NavMeshPathStatus.PathComplete) continue;
 
                 float distance = GetPathLength(pathToTarget);
@@ -108,7 +116,7 @@ public class BaseEnemy : Entity
                 {
                     shortestDistance = distance;
                     bestTarget = candidate.gameObject;
-                    agent.SetDestination(sampledPosition);
+                    Agent.SetDestination(sampledPosition);
                 }
             }
 

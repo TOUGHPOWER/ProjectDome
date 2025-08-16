@@ -196,10 +196,11 @@ MonoBehaviour:
   <CurrentAmountDeposited>k__BackingField: 0
   <isShielded>k__BackingField: 0
   <IsBuilt>k__BackingField: 0
+  <needsRepairs>k__BackingField: 0
   <PlayerInBuilding>k__BackingField: 0
   BuildingType: 1
   buildingSlot: {fileID: 8146787440499614232}
-  buildingSR: {fileID: 0}
+  buildingSR: {fileID: 1924385555495594091}
   currentBuildingSprite: {fileID: 0}
   builtSprite: {fileID: 1604552547, guid: de12ccfc1c9dd1643a78641ad00ff2f7, type: 3}
   destroyedSprite: {fileID: 0}
@@ -671,7 +672,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33e7b3ae3a3559642b35db2ca49ce340, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingCostText: {fileID: 0}
+  buildingCostText: {fileID: 584852904318606953}
   statusIcon: {fileID: 4709593699745030609}
   repairIcon: {fileID: 21300000, guid: 1b591f2706bc27d43be79846fd75274f, type: 3}
   upgradeIcon: {fileID: 21300000, guid: 3acddd1c67942ad40af54b8d1c71797d, type: 3}

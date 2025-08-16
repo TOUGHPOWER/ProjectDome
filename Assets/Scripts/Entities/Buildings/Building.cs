@@ -21,6 +21,7 @@ public class Building : Entity
 
     [field: SerializeField] public bool isShielded { get; set; }
     [field: SerializeField] public bool IsBuilt { get; set; }
+    [field: SerializeField] public bool needsRepairs { get; set; }
     [field: SerializeField] public bool PlayerInBuilding { get; set; }
 
     
@@ -37,6 +38,7 @@ public class Building : Entity
     // Start is called before the first frame update
     void Start()
     {
+        Build();
         playerInfo = FindObjectOfType<PlayerInfo>();
         buildingSR = gameObject.GetComponent<SpriteRenderer>();
         buildingSR.sprite = currentBuildingSprite;
@@ -50,6 +52,8 @@ public class Building : Entity
         {
             buildingSlot.GetComponent<SpriteRenderer>().color = notShieldedColor;
         }
+
+        UpdateRepairCost();
     }
 
     // Update is called once per frame
@@ -61,7 +65,12 @@ public class Building : Entity
             {
                 lastCurrentHealth = CurrentHealth;
 
-                if (CurrentHealth <= 0)
+                
+                if (CurrentHealth < MaxHealth)
+                {
+                    UpdateRepairCost();
+                }
+                else if (CurrentHealth <= 0)
                 {
                     IsBuilt = false;
                     //Display Destroyed Sprite
@@ -69,9 +78,9 @@ public class Building : Entity
                     buildingSR.sprite = destroyedSprite;
                     Debug.Log("I was destroyed");
                 }
-                else
+                else if(currentHPPercentage >= 100)
                 {
-                    UpdateRepairCost();
+                    needsRepairs = false;
                 }
 
             }
@@ -97,10 +106,12 @@ public class Building : Entity
         if (currentHPPercentage < 10)
         {
             RepairCostMultiplier = 2;
+            needsRepairs = true;
         }
         else if (currentHPPercentage < 100)
         {
             RepairCostMultiplier = float.Parse($"1.{100 - currentHPPercentage}");
+            needsRepairs = true;
         }
         
         //print($"Current R.C.M:{RepairCostMultiplier}");
@@ -141,7 +152,6 @@ public class Building : Entity
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(gameObject + "Has collided with" + collision.gameObject.name);
 
         if (collision.gameObject.CompareTag("Shield"))
         {

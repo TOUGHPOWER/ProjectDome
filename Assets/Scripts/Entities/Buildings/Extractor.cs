@@ -11,7 +11,7 @@ public class Extractor : MonoBehaviour
 
     //public RuntimeAnimatorController extractorAnim;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         buildingSystem = GetComponent<Building>();
     }

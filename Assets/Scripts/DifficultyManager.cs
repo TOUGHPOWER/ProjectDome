@@ -13,19 +13,22 @@ public class DifficultyManager : MonoBehaviour
 
     [SerializeField] private string currentDifficulty;
 
-    private (float min, float max) easyTimeframe = (0f, 3f);
+    //Timeframe in Minutes
+    private (float min, float max) easyTimeframe = (0f, 2f);
 
-    private (float min, float max) mediumTimeframe = (3f, 6f);
+    private (float min, float max) mediumTimeframe = (2.1f, 3f);
 
-    private (float min, float max) hardTimeframe = (6f, Mathf.Infinity);
-
-    private double[] difficultyTimeFrames;
+    private (float min, float max) hardTimeframe = (3.1f, Mathf.Infinity);
 
     private float elapsedTime;
     public string elapsedTimeStr {private set; get; }
+
+    public int elapsedTimeHours { private set; get; }
     public int elapsedTimeMinutes { private set; get; }
 
-    private int lastElapsedTimeMinute;
+    public int elapsedTimeSeconds { private set; get; }
+
+    private int lastElapsedTimeMinutes;
 
     [SerializeField] List<GameObject> enemyPrefabs;
 
@@ -42,9 +45,9 @@ public class DifficultyManager : MonoBehaviour
     {
         RunTimer();
 
-        if(elapsedTimeMinutes != lastElapsedTimeMinute)
+        if(elapsedTimeMinutes != lastElapsedTimeMinutes)
         {
-            lastElapsedTimeMinute = elapsedTimeMinutes;
+            lastElapsedTimeMinutes = elapsedTimeMinutes;
             UpdateDificulty();
         }
 
@@ -54,44 +57,45 @@ public class DifficultyManager : MonoBehaviour
     {
         elapsedTime += Time.deltaTime;
 
-        int hours = Mathf.FloorToInt(elapsedTime / 3600f);
+        elapsedTimeHours = Mathf.FloorToInt(elapsedTime / 3600f);
         elapsedTimeMinutes = Mathf.FloorToInt((elapsedTime % 3600f) / 60f);
-        int seconds = Mathf.FloorToInt(elapsedTime % 60f);
-        elapsedTimeStr = string.Format("{0:00}:{1:00}:{2:00}", hours, elapsedTimeMinutes, seconds);
+        elapsedTimeSeconds = Mathf.FloorToInt(elapsedTime % 60f);
+        elapsedTimeStr = string.Format("{0:00}:{1:00}:{2:00}", elapsedTimeHours, elapsedTimeMinutes, elapsedTimeSeconds);
     }
 
     private void UpdateDificulty()
     {
-        if(elapsedTimeMinutes >= easyTimeframe.min && elapsedTimeMinutes < easyTimeframe.max)
+        if(elapsedTimeMinutes == easyTimeframe.min)
         {
             currentDifficulty = difficulties[0];
 
         }
-        else if(elapsedTimeMinutes >= mediumTimeframe.min && elapsedTimeMinutes < mediumTimeframe.max)
+        else if(elapsedTimeMinutes == mediumTimeframe.min)
         {
             currentDifficulty = difficulties[1];
+            UpdateDifficultyModifier();
         }
-        else if (elapsedTimeMinutes >= hardTimeframe.min && elapsedTimeMinutes < hardTimeframe.max)
+        else if (elapsedTimeMinutes == hardTimeframe.min)
         {
             currentDifficulty = difficulties[2];
+            UpdateDifficultyModifier();
         }
+       
 
 
     }
 
-    private void UpdateEnemyDifficulty()
+    private void UpdateDifficultyModifier()
     {
-        foreach (GameObject enemy in enemyPrefabs)
-        {
-            BaseEnemy enemyScript = enemy.GetComponent<BaseEnemy>();
+        difficultyIncModifier += modifierIncreaseValue;
+    }
 
-            enemyScript.startingMaxHealth = Convert.ToInt32(MathF.Round(enemyScript.startingMaxHealth * difficultyIncModifier));
-            enemyScript.agent.speed = Convert.ToInt32(MathF.Round(enemyScript.agent.speed * difficultyIncModifier));
-            if (enemyScript)
-            {
-                
-            }
-        }
+    public void UpdateEnemyStats(BaseEnemy enemyScript)
+    {
+        enemyScript.MaxHealth = Convert.ToInt32(MathF.Round(enemyScript.MaxHealth * difficultyIncModifier));
+        print($"New Max Health: {enemyScript.StartingMaxHealth}");
+        enemyScript.Agent.speed = Convert.ToInt32(MathF.Round(enemyScript.Agent.speed * difficultyIncModifier));
+        print($"New Movement Speed: {enemyScript.Agent.speed}");
     }
 
 

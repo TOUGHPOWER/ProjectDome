@@ -20,6 +20,6 @@ public class IncreasePlayerMaxHP : Perk
 
     public override void Apply(PlayerInfo player, Building building = null)
     {
-        player.AddMaxHP(addAmountMaxHP);
+        player.IncreaseMaxHP(addAmountMaxHP);
     }
 }

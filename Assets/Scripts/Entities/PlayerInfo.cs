@@ -69,6 +69,7 @@ public class PlayerInfo : Entity
                         {
                             reactor.shieldObj.SetActive(true);
                         }
+                        targetBuilding.needsRepairs = false;
                         break;
                     }
                     else if (!targetBuilding.needsRepairs && targetBuilding.CurrentAmountDeposited >= reactor.upgradeCost)
@@ -86,6 +87,7 @@ public class PlayerInfo : Entity
                 {
                     targetBuilding.FullHPHeal();
                     targetBuilding.CurrentAmountDeposited = 0;
+                    targetBuilding.needsRepairs = false;
                     break;
                 }
             }

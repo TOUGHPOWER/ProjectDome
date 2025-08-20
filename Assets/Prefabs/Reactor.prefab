@@ -440,7 +440,7 @@ MonoBehaviour:
   <PlayerInBuilding>k__BackingField: 0
   BuildingType: 3
   buildingSlot: {fileID: 225061874130713039}
-  buildingSR: {fileID: 0}
+  buildingSR: {fileID: 8703080492827080139}
   currentBuildingSprite: {fileID: 0}
   builtSprite: {fileID: 1571820071, guid: 8ae760364a5efc2429d473dbbcabbde0, type: 3}
   destroyedSprite: {fileID: 21300000, guid: 914a08bc2c90f544da58431cb428a2ef, type: 3}
@@ -457,6 +457,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7eb416ee83f6868468165fda689ac5ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <shieldObj>k__BackingField: {fileID: 454436691347438734}
   sceneLoader: {fileID: 0}
   currentUpgradeLevel: 0
   maxUpgradeLevel: 7
@@ -815,6 +816,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildingCostText: {fileID: 0}
+  buildingCostObj: {fileID: 2999793078064679152}
   statusIcon: {fileID: 7345343168123916387}
   repairIcon: {fileID: 21300000, guid: 1b591f2706bc27d43be79846fd75274f, type: 3}
   upgradeIcon: {fileID: 21300000, guid: 3acddd1c67942ad40af54b8d1c71797d, type: 3}

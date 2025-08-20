@@ -80,9 +80,6 @@ public class DifficultyManager : MonoBehaviour
             currentDifficulty = difficulties[2];
             UpdateDifficultyModifier();
         }
-       
-
-
     }
 
     private void UpdateDifficultyModifier()
@@ -93,9 +90,11 @@ public class DifficultyManager : MonoBehaviour
     public void UpdateEnemyStats(BaseEnemy enemyScript)
     {
         enemyScript.MaxHealth = Convert.ToInt32(MathF.Round(enemyScript.MaxHealth * difficultyIncModifier));
-        print($"New Max Health: {enemyScript.StartingMaxHealth}");
+        
         enemyScript.Agent.speed = Convert.ToInt32(MathF.Round(enemyScript.Agent.speed * difficultyIncModifier));
-        print($"New Movement Speed: {enemyScript.Agent.speed}");
+
+        enemyScript.Damage = Convert.ToInt32(MathF.Round(enemyScript.Damage * difficultyIncModifier));
+
     }
 
 

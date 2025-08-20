@@ -9,6 +9,7 @@ public class BuildingUI : MonoBehaviour
     private Building parentBuilding;
 
     [SerializeField] TextMeshProUGUI buildingCostText;
+    [SerializeField] GameObject buildingCostObj;
     [SerializeField] Image statusIcon;
     [SerializeField] Sprite repairIcon;
     [SerializeField] Sprite upgradeIcon;
@@ -37,6 +38,7 @@ public class BuildingUI : MonoBehaviour
 
         if (parentBuilding.BuildingType == BuildingTypes.Reactor)
         {
+            buildingCostObj.SetActive(true);
             float currentUpgCost = parentBuilding.GetComponent<Reactor>().upgradeCost - parentBuilding.CurrentAmountDeposited;
             if (parentBuilding.needsRepairs)
             {
@@ -48,29 +50,28 @@ public class BuildingUI : MonoBehaviour
             }
 
         }
-        else if (parentBuilding.IsBuilt && parentBuilding.needsRepairs)
+        else
         {
-            buildingCostText.text = currentRepairCost.ToString();
-        }
-        else if (!parentBuilding.IsBuilt)
-        {
-            buildingCostText.text = currentBuildCost.ToString();
-        }
-
-        if (buildingCostText.text == "0")
-        {
-            buildingCostText.text = "";
-        }
-        else if(int.Parse(buildingCostText.text) < 0)
-        {
-            buildingCostText.text = "";
+            if (parentBuilding.IsBuilt && parentBuilding.needsRepairs)
+            {
+                buildingCostObj.SetActive(true);
+                buildingCostText.text = currentRepairCost.ToString();
+            }
+            else if (!parentBuilding.IsBuilt)
+            {
+                buildingCostObj.SetActive(true);
+                buildingCostText.text = currentBuildCost.ToString();
+            }
+            else
+            {
+                buildingCostObj.SetActive(false);
+            }
         }
 
     }
 
     private void UpdateStatusIcon()
     {
-
         if (!parentBuilding.IsBuilt && parentBuilding.isShielded)
         {
             statusIcon.gameObject.SetActive(true);

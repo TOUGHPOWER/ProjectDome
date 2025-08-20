@@ -673,6 +673,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildingCostText: {fileID: 584852904318606953}
+  buildingCostObj: {fileID: 6224445254125356317}
   statusIcon: {fileID: 4709593699745030609}
   repairIcon: {fileID: 21300000, guid: 1b591f2706bc27d43be79846fd75274f, type: 3}
   upgradeIcon: {fileID: 21300000, guid: 3acddd1c67942ad40af54b8d1c71797d, type: 3}

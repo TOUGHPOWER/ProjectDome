@@ -140,9 +140,6 @@ public abstract class Entity: MonoBehaviour
             case EntityType.Player:
                 Respawn();
                 break;
-            case EntityType.Building:
-                DisableEntity();
-                break;
             case EntityType.Shield:
                 DisableEntity();
                 break;

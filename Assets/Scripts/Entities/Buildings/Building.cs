@@ -38,7 +38,6 @@ public class Building : Entity
     // Start is called before the first frame update
     void Start()
     {
-        Build();
         playerInfo = FindObjectOfType<PlayerInfo>();
         buildingSR = gameObject.GetComponent<SpriteRenderer>();
         buildingSR.sprite = currentBuildingSprite;
@@ -61,27 +60,37 @@ public class Building : Entity
     {
         if (isShielded)
         {
-            if (IsBuilt && CurrentHealth != lastCurrentHealth)
+            if (IsBuilt )
             {
-                lastCurrentHealth = CurrentHealth;
+               
 
+                if (CurrentHealth != lastCurrentHealth)
+                {
+                    lastCurrentHealth = CurrentHealth;
+
+                    if (CurrentHealth <= 0)
+                    {
+                        IsBuilt = false;
+                        //Display Destroyed Sprite
+                        currentBuildingSprite = destroyedSprite;
+                        buildingSR.sprite = destroyedSprite;
+                        Debug.Log("I was destroyed");
+                    }
+                    else if (CurrentHealth < MaxHealth)
+                    {
+                        UpdateRepairCost();
+                    }
+                    else if (currentHPPercentage == 100)
+                    {
+                        needsRepairs = false;
+                    }
+                    else 
+                    {
+                        currentHPPercentage = 100;
+                    }
+                    
+                }
                 
-                if (CurrentHealth < MaxHealth)
-                {
-                    UpdateRepairCost();
-                }
-                else if (CurrentHealth <= 0)
-                {
-                    IsBuilt = false;
-                    //Display Destroyed Sprite
-                    currentBuildingSprite = destroyedSprite;
-                    buildingSR.sprite = destroyedSprite;
-                    Debug.Log("I was destroyed");
-                }
-                else if(currentHPPercentage >= 100)
-                {
-                    needsRepairs = false;
-                }
 
             }
 
@@ -110,9 +119,10 @@ public class Building : Entity
         }
         else if (currentHPPercentage < 100)
         {
-            RepairCostMultiplier = float.Parse($"1.{100 - currentHPPercentage}");
+            RepairCostMultiplier = 1f + ((100f - currentHPPercentage) / 100f);
             needsRepairs = true;
         }
+
         
         //print($"Current R.C.M:{RepairCostMultiplier}");
 
@@ -128,6 +138,7 @@ public class Building : Entity
     {
         IsBuilt = true;
         SetupHealthValues(BuildingMaxHP);
+        lastCurrentHealth = CurrentHealth;
         currentBuildingSprite = builtSprite;
         buildingSR.sprite = builtSprite;
         gameObject.AddComponent<Target>();

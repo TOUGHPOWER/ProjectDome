@@ -10,7 +10,7 @@ public class BaseEnemy : Entity
 {
     
     [field:SerializeField] public int StartingMaxHealth { get; set; }
-    [field: SerializeField] public int Damage { get; private set; }
+    [field: SerializeField] public int Damage { get; set; }
 
     [Header("AI")]
     
